@@ -36,7 +36,7 @@ public class TicTacToeConsoleApp {
 
 	public void run() {
 		final BoardPrinter printer = new BoardPrinter();
-		final SingleGame game = new SingleGame(playerOne, playerTwo, 3, 3);
+		final SingleGame game = new SingleGame(playerOne, playerTwo, 3);
 		printer.printBoardWithNumbers(game.getBoardView());
 		GameResult latestResult;
 		Player nextPlayer;

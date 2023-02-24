@@ -21,14 +21,14 @@ public class SingleGame {
     private final Player playerTwo;
     private Player latestMoveByPlayer;
 
-    public SingleGame(Player playerOne, Player playerTwo, int rows, int columns) {
+    public SingleGame(Player playerOne, Player playerTwo, int size) {
         if (supportedSymbols.stream().noneMatch(marker -> marker.getValue() == playerOne.getSymbol().getValue())) {
             throw new SymbolIsUnsupportedException("Symbol " + playerOne.getSymbol().getValue() + " is unsupported.");
         }
         if (supportedSymbols.stream().noneMatch(marker -> marker.getValue() == playerTwo.getSymbol().getValue())) {
             throw new SymbolIsUnsupportedException("Symbol " + playerTwo.getSymbol().getValue() + " is unsupported.");
         }
-        board = new Board(rows, columns);
+        board = new Board(size, size);
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
     }
@@ -109,11 +109,8 @@ public class SingleGame {
     }
 
     private boolean checkVertically(char symbol) {
-        for (int i = 0; i < 3; i++) {
-            if (board.hasSymbolOnFields(symbol,
-                    new PairOfCoordinates(0, i),
-                    new PairOfCoordinates(1, i),
-                    new PairOfCoordinates(2, i))) {
+        for (int i = 0; i < board.getColumnNumber(); i++) {
+            if (board.hasSymbolOnFields(symbol, new PairOfCoordinates(0, i), new PairOfCoordinates(1, i), new PairOfCoordinates(2, i))) {
                 return true;
             }
         }
@@ -121,7 +118,7 @@ public class SingleGame {
     }
 
     private boolean checkHorizontally(char symbol) {
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < board.getColumnNumber(); i++) {
             if (board.hasSymbolOnFields(symbol,
                     new PairOfCoordinates(i, 0),
                     new PairOfCoordinates(i, 1),
