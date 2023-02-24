@@ -21,14 +21,14 @@ public class SingleGame {
     private final Player playerTwo;
     private Player latestMoveByPlayer;
 
-    public SingleGame(Player playerOne, Player playerTwo) {
+    public SingleGame(Player playerOne, Player playerTwo, int rows, int columns) {
         if (supportedSymbols.stream().noneMatch(marker -> marker.getValue() == playerOne.getSymbol().getValue())) {
             throw new SymbolIsUnsupportedException("Symbol " + playerOne.getSymbol().getValue() + " is unsupported.");
         }
         if (supportedSymbols.stream().noneMatch(marker -> marker.getValue() == playerTwo.getSymbol().getValue())) {
             throw new SymbolIsUnsupportedException("Symbol " + playerTwo.getSymbol().getValue() + " is unsupported.");
         }
-        board = new Board(3, 3);
+        board = new Board(rows, columns);
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
     }

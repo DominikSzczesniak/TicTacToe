@@ -32,7 +32,7 @@ class SingleGameTest {
     @Test
     void board_should_be_empty_at_the_start_of_the_game() {
         // given
-        final SingleGame tut = new SingleGame(playerOne, playerTwo);
+        final SingleGame tut = new SingleGame(playerOne, playerTwo, 3, 3);
 
         // when
         final Character[][] boardView = tut.getBoardView();
@@ -46,7 +46,7 @@ class SingleGameTest {
     @Test
     void player_one_should_make_first_move() {
         // given
-        final SingleGame tut = new SingleGame(playerOne, playerTwo);
+        final SingleGame tut = new SingleGame(playerOne, playerTwo, 3, 3);
         final PlayerMove move = new PlayerMove(0, 0);
 
         // when
@@ -62,7 +62,7 @@ class SingleGameTest {
     @Test
     void every_player_should_make_single_move_when_it_is_their_turn() {
         // given
-        final SingleGame tut = new SingleGame(playerOne, playerTwo);
+        final SingleGame tut = new SingleGame(playerOne, playerTwo, 3, 3);
 
         // when
         tut.makeMove(playerOne, new PlayerMove(0, 2));
@@ -78,7 +78,7 @@ class SingleGameTest {
     @Test
     void same_player_cant_make_many_moves_in_a_row() {
         // given
-        final SingleGame tut = new SingleGame(playerOne, playerTwo);
+        final SingleGame tut = new SingleGame(playerOne, playerTwo, 3, 3);
 
         // when
         tut.makeMove(playerOne, new PlayerMove(0, 2));
@@ -97,7 +97,7 @@ class SingleGameTest {
     @Test
     void should_not_make_a_move_on_already_taken_spot() {
         // given
-        final SingleGame tut = new SingleGame(playerOne, playerTwo);
+        final SingleGame tut = new SingleGame(playerOne, playerTwo, 3, 3);
 
         // when
         tut.makeMove(playerOne, new PlayerMove(1, 1));
@@ -117,7 +117,7 @@ class SingleGameTest {
         final Player playerThree = new Player(new Symbol('A'), new Name("Player"));
 
         // when
-        Throwable thrown = catchThrowable(() -> new SingleGame(playerOne, playerThree));
+        Throwable thrown = catchThrowable(() -> new SingleGame(playerOne, playerThree, 3, 3));
 
         // then
         assertThat(thrown).isInstanceOf(SymbolIsUnsupportedException.class);
@@ -126,7 +126,7 @@ class SingleGameTest {
     @Test
     void player_one_should_not_lose_turn_if_previously_chose_illegal_spot_to_place_symbol_on() {
         // given
-        final SingleGame tut = new SingleGame(playerOne, playerTwo);
+        final SingleGame tut = new SingleGame(playerOne, playerTwo, 3, 3);
 
         // when
         tut.makeMove(playerOne, new PlayerMove(1, 1));
@@ -145,7 +145,7 @@ class SingleGameTest {
     @Test
     void player_that_is_not_a_part_of_the_game_shouldnt_be_able_to_make_a_move() {
         // given
-        final SingleGame tut = new SingleGame(playerOne, playerTwo);
+        final SingleGame tut = new SingleGame(playerOne, playerTwo, 3, 3);
         final Player player = new Player(new Symbol('X'), new Name("player"));
 
         // when
@@ -158,7 +158,7 @@ class SingleGameTest {
     @Test
     void should_not_modify_board_by_modifying_boards_view() {
         // given
-        final SingleGame tut = new SingleGame(playerOne, playerTwo);
+        final SingleGame tut = new SingleGame(playerOne, playerTwo, 3, 3);
         final Character[][] boardView = tut.getBoardView();
 
         // when
@@ -176,7 +176,7 @@ class SingleGameTest {
     @Test
     void game_should_be_won_by_player_one() {
         // when
-        final SingleGame tut = new SingleGame(playerOne, playerTwo);
+        final SingleGame tut = new SingleGame(playerOne, playerTwo, 3, 3);
 
         // then
         assertThat(tut.makeMove(playerOne, new PlayerMove(0, 0)).getGameStatus()).isEqualTo(IN_PROGRESS);
@@ -189,7 +189,7 @@ class SingleGameTest {
     @Test
     void game_should_be_won_by_player_two() {
         // when
-        final SingleGame tut = new SingleGame(playerOne, playerTwo);
+        final SingleGame tut = new SingleGame(playerOne, playerTwo, 3, 3);
 
         // then
         assertThat(tut.makeMove(playerOne, new PlayerMove(0, 0)).getGameStatus()).isEqualTo(IN_PROGRESS);
@@ -203,7 +203,7 @@ class SingleGameTest {
     @Test
     void game_should_be_in_progress() {
         // given
-        final SingleGame tut = new SingleGame(playerOne, playerTwo);
+        final SingleGame tut = new SingleGame(playerOne, playerTwo, 3, 3);
 
         // when
         assertThat(tut.makeMove(playerOne, new PlayerMove(1, 0)).getGameStatus()).isEqualTo(IN_PROGRESS);
@@ -219,7 +219,7 @@ class SingleGameTest {
     @Test
     void game_should_be_a_draw_if_board_is_filled_and_no_winner() {
         // given
-        final SingleGame tut = new SingleGame(playerOne, playerTwo);
+        final SingleGame tut = new SingleGame(playerOne, playerTwo, 3, 3);
 
         // when
         assertThat(tut.makeMove(playerOne, new PlayerMove(0, 0)).getGameStatus()).isEqualTo(IN_PROGRESS);
