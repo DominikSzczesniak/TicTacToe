@@ -2,11 +2,11 @@ package pl.szczesniak.dominik.tictactoe.singlegame.domain;
 
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.exceptions.OtherPlayerTurnException;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.exceptions.PlayerIsNotThePartOfTheGameException;
+import pl.szczesniak.dominik.tictactoe.singlegame.domain.exceptions.SizeNotSupportedException;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.exceptions.SpotAlreadyTakenOnBoardException;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.exceptions.SymbolIsUnsupportedException;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.GameResult;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.GameStatus;
-import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.PairOfCoordinates;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.Player;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.PlayerMove;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.Symbol;
@@ -28,6 +28,9 @@ public class SingleGame {
         if (supportedSymbols.stream().noneMatch(marker -> marker.getValue() == playerTwo.getSymbol().getValue())) {
             throw new SymbolIsUnsupportedException("Symbol " + playerTwo.getSymbol().getValue() + " is unsupported.");
         }
+        if (size < 3) {
+            throw new SizeNotSupportedException("Board must be size 3 or bigger");
+        }
         board = new Board(size, size);
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
@@ -44,7 +47,7 @@ public class SingleGame {
         checkIsSpotNotTaken(player, move);
         board.placeSymbol(player.getSymbol().getValue(), move.getRowIndex(), move.getColumnIndex());
         latestMoveByPlayer = player;
-        return resolveGameResult();
+        return resolveGameResult(move);
     }
 
     private void checkPlayerIsPartOfSingleGame(Player player) {
@@ -65,8 +68,8 @@ public class SingleGame {
         }
     }
 
-    private GameResult resolveGameResult() {
-        if (checkIfPlayerWon(latestMoveByPlayer)) {
+    private GameResult resolveGameResult(PlayerMove move) {
+        if (checkIfPlayerWon(latestMoveByPlayer, move)) {
             return new GameResult(GameStatus.WIN, latestMoveByPlayer);
         }
         if (isDraw()) {
@@ -76,57 +79,148 @@ public class SingleGame {
         return new GameResult(GameStatus.IN_PROGRESS, null);
     }
 
-    private boolean checkIfPlayerWon(final Player player) {
+//    private boolean checkIfPlayerWon(final Player player) {
+//        Character[][] arrayForChecks = getBoardView();
+//        return false;
+//    }
+
+    private boolean checkIfPlayerWon(final Player player, final PlayerMove move) {
         final char symbol = player.getSymbol().getValue();
+        Character[][] arrayForChecks = getBoardView();
 
-        if (checkHorizontally(symbol)) {
+
+        if (checkHorizontally(symbol, arrayForChecks, move)) {
             return true;
         }
-        if (checkVertically(symbol)) {
+        if (checkVertically(symbol, arrayForChecks, move)) {
             return true;
         }
-        if (checkDiagonally(symbol)) {
+        if (checkDiagonally(symbol, arrayForChecks, move)) {
             return true;
         }
 
         return false;
     }
 
-    private boolean checkDiagonally(char symbol) {
-        if (board.hasSymbolOnFields(symbol,
-                new PairOfCoordinates(0, 0),
-                new PairOfCoordinates(1, 1),
-                new PairOfCoordinates(2, 2))) {
-            return true;
-        }
-        if (board.hasSymbolOnFields(symbol,
-                new PairOfCoordinates(0, 2),
-                new PairOfCoordinates(1, 1),
-                new PairOfCoordinates(2, 0))) {
-            return true;
-        }
-        return false;
+    private boolean checkHorizontally(final char symbol, final Character[][] arrayForChecks, final PlayerMove move) {
+        if (!checkHorizontalLeft(symbol, arrayForChecks, move) && !checkHorizontalRight(symbol, arrayForChecks, move))
+            return false;
+
+        return true;
     }
 
-    private boolean checkVertically(char symbol) {
-        for (int i = 0; i < board.getColumnNumber(); i++) {
-            if (board.hasSymbolOnFields(symbol, new PairOfCoordinates(0, i), new PairOfCoordinates(1, i), new PairOfCoordinates(2, i))) {
-                return true;
+    private boolean checkVertically(final char symbol, final Character[][] arrayForChecks, final PlayerMove move) {
+        if (!checkVerticalDown(symbol, arrayForChecks, move) && !checkVerticalUp(symbol, arrayForChecks, move))
+            return false;
+
+        return true;
+    }
+
+    private boolean checkDiagonally(final char symbol, final Character[][] arrayForChecks, final PlayerMove move) {
+        if (!checkDiagonalRightUp(symbol, arrayForChecks, move) && !checkDiagonalLeftDown(symbol, arrayForChecks, move) &&
+                !checkDiagonalRightDown(symbol, arrayForChecks, move) && !checkDiagonalLeftUp(symbol, arrayForChecks, move))
+            return false;
+
+        return true;
+    }
+
+    private boolean checkHorizontalRight(final char symbol, final Character[][] arrayForChecks, final PlayerMove move) { // sprawdzenie prawej strony od symbolu
+        if (board.getColumnNumber() - move.getColumnIndex() > 2) {
+            for (int column = move.getColumnIndex(); column <= board.getColumnNumber() - 1; column++) {
+                if (arrayForChecks[move.getRowIndex()][column] == null || arrayForChecks[move.getRowIndex()][column] != symbol) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private static boolean checkHorizontalLeft(final char symbol, final Character[][] arrayForChecks, final PlayerMove move) { // sprawdzenie lewel strony od symbolu
+        if (move.getColumnIndex() >= 2) {
+            for (int column = move.getColumnIndex(); column >= move.getColumnIndex() - 2; column--) {
+                if (arrayForChecks[move.getRowIndex()][column] == null || arrayForChecks[move.getRowIndex()][column] != symbol) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private static boolean checkVerticalUp(final char symbol, final Character[][] arrayForChecks, final PlayerMove move) { // sprawdzenie gory od symbolu
+        if (move.getRowIndex() >= 2) {
+            for (int row = move.getRowIndex(); row >= move.getRowIndex() - 2; row--) {
+                if (arrayForChecks[row][move.getColumnIndex()] == null || arrayForChecks[row][move.getColumnIndex()] != symbol) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private boolean checkVerticalDown(final char symbol, final Character[][] arrayForChecks, final PlayerMove move) { // sprawdzenie dolu od symbolu
+        if (board.getRowsNumber() - move.getRowIndex() > 2) {
+            for (int row = move.getRowIndex(); row <= board.getRowsNumber() - 2; row++) {
+                if (arrayForChecks[row][move.getColumnIndex()] == null || arrayForChecks[row][move.getColumnIndex()] != symbol) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private boolean checkDiagonalRightUp(final char symbol, final Character[][] arrayForChecks, final PlayerMove move) { // sprawdzenie prawo gora od symbolu
+        int row;
+        row = move.getRowIndex();
+        if (board.getColumnNumber() - move.getColumnIndex() > 2 && move.getRowIndex() >= 2) {
+            for (int column = move.getColumnIndex(); column <= board.getColumnNumber() - 1; column++) {
+                if (arrayForChecks[row][column] == null || arrayForChecks[row][column] != symbol) {
+                    return true;
+                }
+                row--;
             }
         }
         return false;
     }
 
-    private boolean checkHorizontally(char symbol) {
-        for (int i = 0; i < board.getColumnNumber(); i++) {
-            if (board.hasSymbolOnFields(symbol,
-                    new PairOfCoordinates(i, 0),
-                    new PairOfCoordinates(i, 1),
-                    new PairOfCoordinates(i, 2))) {
-                return true;
+    private boolean checkDiagonalLeftDown(final char symbol, final Character[][] arrayForChecks, final PlayerMove move) { // sprawdzenie lewo dol od symbolu
+        int row;
+        row = move.getRowIndex();
+        if (move.getColumnIndex() >= 2 && board.getRowsNumber() - move.getRowIndex() > 2) {
+            for (int column = move.getColumnIndex(); column >= move.getColumnIndex() - 2; column--) {
+                if (arrayForChecks[row][column] == null || arrayForChecks[row][column] != symbol) {
+                    return false;
+                }
+                row++;
             }
         }
-        return false;
+        return true;
+    }
+
+    private boolean checkDiagonalRightDown(final char symbol, final Character[][] arrayForChecks, final PlayerMove move) { // sprawdzenie prawo dol od symbolu
+        int row;
+        row = move.getRowIndex();
+        if (board.getColumnNumber() - move.getColumnIndex() > 2 && board.getRowsNumber() - move.getRowIndex() > 2) {
+            for (int column = move.getColumnIndex(); column <= board.getColumnNumber() - 1; column++) {
+                if (arrayForChecks[row][column] == null || arrayForChecks[row][column] != symbol) {
+                    return false;
+                }
+                row++;
+            }
+        }
+        return true;
+    }
+
+    private static boolean checkDiagonalLeftUp(final char symbol, final Character[][] arrayForChecks, final PlayerMove move) { // sprawdzenie lewo gora od symbolu
+        int row = move.getRowIndex();
+        if (move.getRowIndex() >= 2 && move.getColumnIndex() >= 2) {
+            for (int column = move.getColumnIndex(); column >= move.getColumnIndex() - 2; column--) {
+                if (arrayForChecks[row][column] == null || arrayForChecks[row][column] != symbol) {
+                    return false;
+                }
+                row--;
+            }
+        }
+        return true;
     }
 
     public boolean isDraw() {

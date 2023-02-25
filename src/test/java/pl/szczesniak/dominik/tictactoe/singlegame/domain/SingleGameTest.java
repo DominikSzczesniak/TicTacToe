@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.exceptions.OtherPlayerTurnException;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.exceptions.PlayerIsNotThePartOfTheGameException;
+import pl.szczesniak.dominik.tictactoe.singlegame.domain.exceptions.SizeNotSupportedException;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.exceptions.SpotAlreadyTakenOnBoardException;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.exceptions.SymbolIsUnsupportedException;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.GameResult;
@@ -41,6 +42,15 @@ class SingleGameTest {
         assertThat(boardView)
                 .hasDimensions(3, 3)
                 .isEqualTo(new Character[3][3]);
+    }
+
+    @Test
+    void board_should_not_be_made_with_unsupported_size() {
+        // when
+        final Throwable thrown = catchThrowable(() -> new SingleGame(playerOne, playerTwo, 2));
+
+        // then
+        assertThat(thrown).isInstanceOf(SizeNotSupportedException.class);
     }
 
     @Test
@@ -187,47 +197,6 @@ class SingleGameTest {
     }
 
     @Test
-    void game_should_be_won_by_player_one_5x5() {
-        // when
-        final SingleGame tut = new SingleGame(playerOne, playerTwo, 5);
-
-        // then
-        assertThat(tut.makeMove(playerOne, new PlayerMove(3, 4)).getGameStatus()).isEqualTo(IN_PROGRESS);
-        assertThat(tut.makeMove(playerTwo, new PlayerMove(0, 3)).getGameStatus()).isEqualTo(IN_PROGRESS);
-        assertThat(tut.makeMove(playerOne, new PlayerMove(2, 4)).getGameStatus()).isEqualTo(IN_PROGRESS);
-        assertThat(tut.makeMove(playerTwo, new PlayerMove(1, 3)).getGameStatus()).isEqualTo(IN_PROGRESS);
-        assertThat(tut.makeMove(playerOne, new PlayerMove(4, 4)).getGameStatus()).isEqualTo(WIN);
-
-        assertThat(tut.getBoardView()).satisfies(board -> {
-            assertThat(board[0]).containsExactly(null, null, null, 'X', null);
-            assertThat(board[1]).containsExactly(null, null, null, 'X', null);
-            assertThat(board[2]).containsExactly(null, null, null, null, 'O');
-            assertThat(board[3]).containsExactly(null, null, null, null, 'O');
-            assertThat(board[4]).containsExactly(null, null, null, null, 'O');
-        });
-    }
-
-    @Test
-    void game_should_be_draw_5x5() {
-        // when
-        final SingleGame tut = new SingleGame(playerOne, playerTwo, 5);
-
-        // then
-        assertThat(tut.makeMove(playerOne, new PlayerMove(0, 0)).getGameStatus()).isEqualTo(IN_PROGRESS);
-        assertThat(tut.makeMove(playerTwo, new PlayerMove(1, 1)).getGameStatus()).isEqualTo(IN_PROGRESS);
-        // ...
-        assertThat(tut.makeMove(playerOne, new PlayerMove(1, 0)).getGameStatus()).isEqualTo(DRAW);
-
-        assertThat(tut.getBoardView()).satisfies(board -> {
-            assertThat(board[0]).containsExactly('O', 'X', null, null, null);
-            assertThat(board[1]).containsExactly('X', null, null, null, null);
-            assertThat(board[2]).containsExactly(null, null, null, null, null);
-            assertThat(board[3]).containsExactly(null, null, null, null, null);
-            assertThat(board[4]).containsExactly(null, null, null, null, null);
-        });
-    }
-
-    @Test
     void game_should_be_won_by_player_two() {
         // when
         final SingleGame tut = new SingleGame(playerOne, playerTwo, 3);
@@ -275,5 +244,87 @@ class SingleGameTest {
 
         // then
         assertThat(tut.isDraw()).isEqualTo(true);
+    }
+
+    @Test
+    void game_should_be_won_by_player_one_4x4_v1() {
+        // given
+        final SingleGame tut = new SingleGame(playerOne, playerTwo, 4);
+
+        // when
+        assertThat(tut.makeMove(playerOne, new PlayerMove(3, 3)).getGameStatus()).isEqualTo(IN_PROGRESS);
+        assertThat(tut.makeMove(playerTwo, new PlayerMove(0, 3)).getGameStatus()).isEqualTo(IN_PROGRESS);
+        assertThat(tut.makeMove(playerOne, new PlayerMove(2, 3)).getGameStatus()).isEqualTo(IN_PROGRESS);
+        assertThat(tut.makeMove(playerTwo, new PlayerMove(2, 1)).getGameStatus()).isEqualTo(IN_PROGRESS);
+        assertThat(tut.makeMove(playerOne, new PlayerMove(1, 3)).getGameStatus()).isEqualTo(WIN);
+
+        // then
+        assertThat(tut.getBoardView()).satisfies(board -> {
+            assertThat(board[0]).containsExactly(null, null, null, 'X');
+            assertThat(board[1]).containsExactly(null, null, null, 'O');
+            assertThat(board[2]).containsExactly(null, 'X', null, 'O');
+            assertThat(board[3]).containsExactly(null, null, null, 'O');
+        });
+    }
+
+    @Test
+    void game_should_be_won_by_player_one_4x4_v3() {
+        // when
+        final SingleGame tut = new SingleGame(playerOne, playerTwo, 4);
+
+        // then
+        assertThat(tut.makeMove(playerOne, new PlayerMove(2, 1)).getGameStatus()).isEqualTo(IN_PROGRESS);
+        assertThat(tut.makeMove(playerTwo, new PlayerMove(3, 0)).getGameStatus()).isEqualTo(IN_PROGRESS);
+        assertThat(tut.makeMove(playerOne, new PlayerMove(1, 2)).getGameStatus()).isEqualTo(IN_PROGRESS);
+        assertThat(tut.makeMove(playerTwo, new PlayerMove(0, 0)).getGameStatus()).isEqualTo(IN_PROGRESS);
+        assertThat(tut.makeMove(playerOne, new PlayerMove(0, 3)).getGameStatus()).isEqualTo(WIN);
+    }
+
+    @Test
+    void game_should_be_won_by_player_one_4x4_v2() {
+        // when
+        final SingleGame tut = new SingleGame(playerOne, playerTwo, 4);
+
+        // then
+        assertThat(tut.makeMove(playerOne, new PlayerMove(0, 0)).getGameStatus()).isEqualTo(IN_PROGRESS);
+        assertThat(tut.makeMove(playerTwo, new PlayerMove(3, 0)).getGameStatus()).isEqualTo(IN_PROGRESS);
+        assertThat(tut.makeMove(playerOne, new PlayerMove(0, 1)).getGameStatus()).isEqualTo(IN_PROGRESS);
+        assertThat(tut.makeMove(playerTwo, new PlayerMove(2, 1)).getGameStatus()).isEqualTo(IN_PROGRESS);
+        assertThat(tut.makeMove(playerOne, new PlayerMove(1, 3)).getGameStatus()).isEqualTo(IN_PROGRESS);
+        assertThat(tut.makeMove(playerTwo, new PlayerMove(1, 2)).getGameStatus()).isEqualTo(IN_PROGRESS);
+    }
+
+        @Test
+    void game_should_be_draw_4x4() {
+        // when
+        final SingleGame tut = new SingleGame(playerOne, playerTwo, 4);
+
+        // then
+        assertThat(tut.makeMove(playerOne, new PlayerMove(0, 1)).getGameStatus()).isEqualTo(IN_PROGRESS);
+        assertThat(tut.makeMove(playerTwo, new PlayerMove(0, 0)).getGameStatus()).isEqualTo(IN_PROGRESS);
+        assertThat(tut.makeMove(playerOne, new PlayerMove(0, 2)).getGameStatus()).isEqualTo(IN_PROGRESS);
+        assertThat(tut.makeMove(playerTwo, new PlayerMove(0, 3)).getGameStatus()).isEqualTo(IN_PROGRESS);
+        assertThat(tut.makeMove(playerOne, new PlayerMove(1, 0)).getGameStatus()).isEqualTo(IN_PROGRESS);
+        assertThat(tut.makeMove(playerTwo, new PlayerMove(1, 2)).getGameStatus()).isEqualTo(IN_PROGRESS);
+        assertThat(tut.makeMove(playerOne, new PlayerMove(1, 3)).getGameStatus()).isEqualTo(IN_PROGRESS);
+        assertThat(tut.makeMove(playerTwo, new PlayerMove(1, 1)).getGameStatus()).isEqualTo(IN_PROGRESS);
+        assertThat(tut.makeMove(playerOne, new PlayerMove(2, 1)).getGameStatus()).isEqualTo(IN_PROGRESS);
+        assertThat(tut.makeMove(playerTwo, new PlayerMove(2, 0)).getGameStatus()).isEqualTo(IN_PROGRESS);
+        assertThat(tut.makeMove(playerOne, new PlayerMove(2, 2)).getGameStatus()).isEqualTo(IN_PROGRESS);
+        assertThat(tut.makeMove(playerTwo, new PlayerMove(2, 3)).getGameStatus()).isEqualTo(IN_PROGRESS);
+        assertThat(tut.makeMove(playerOne, new PlayerMove(3, 0)).getGameStatus()).isEqualTo(IN_PROGRESS);
+        assertThat(tut.makeMove(playerTwo, new PlayerMove(3, 1)).getGameStatus()).isEqualTo(IN_PROGRESS);
+        assertThat(tut.makeMove(playerOne, new PlayerMove(3, 3)).getGameStatus()).isEqualTo(IN_PROGRESS);
+        assertThat(tut.makeMove(playerTwo, new PlayerMove(3, 2)).getGameStatus()).isEqualTo(DRAW);
+
+
+        // ...
+
+        assertThat(tut.getBoardView()).satisfies(board -> {
+            assertThat(board[0]).containsExactly('X', 'O', 'O', 'X');
+            assertThat(board[1]).containsExactly('O', 'X', 'X', 'O');
+            assertThat(board[2]).containsExactly('X', 'O', 'O', 'X');
+            assertThat(board[3]).containsExactly('O', 'X', 'X', 'O');
+        });
     }
 }
