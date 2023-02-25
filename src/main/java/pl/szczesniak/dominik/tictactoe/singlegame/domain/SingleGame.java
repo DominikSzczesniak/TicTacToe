@@ -78,12 +78,6 @@ public class SingleGame {
 
         return new GameResult(GameStatus.IN_PROGRESS, null);
     }
-
-//    private boolean checkIfPlayerWon(final Player player) {
-//        Character[][] arrayForChecks = getBoardView();
-//        return false;
-//    }
-
     private boolean checkIfPlayerWon(final Player player, final PlayerMove move) {
         final char symbol = player.getSymbol().getValue();
         Character[][] arrayForChecks = getBoardView();
