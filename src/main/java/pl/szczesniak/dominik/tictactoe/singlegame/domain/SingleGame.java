@@ -126,7 +126,7 @@ public class SingleGame {
 
     private boolean checkHorizontalRight(final char symbol, final Character[][] arrayForChecks, final PlayerMove move) { // sprawdzenie prawej strony od symbolu
         if (board.getColumnNumber() - move.getColumnIndex() > 2) {
-            for (int column = move.getColumnIndex(); column <= board.getColumnNumber() - 1; column++) {
+            for (int column = move.getColumnIndex(); column <= column + 2; column++) {
                 if (arrayForChecks[move.getRowIndex()][column] == null || arrayForChecks[move.getRowIndex()][column] != symbol) {
                     return false;
                 }
@@ -137,7 +137,7 @@ public class SingleGame {
 
     private static boolean checkHorizontalLeft(final char symbol, final Character[][] arrayForChecks, final PlayerMove move) { // sprawdzenie lewel strony od symbolu
         if (move.getColumnIndex() >= 2) {
-            for (int column = move.getColumnIndex(); column >= move.getColumnIndex() - 2; column--) {
+            for (int column = move.getColumnIndex(); column >= column - 2; column--) {
                 if (arrayForChecks[move.getRowIndex()][column] == null || arrayForChecks[move.getRowIndex()][column] != symbol) {
                     return false;
                 }
@@ -159,7 +159,7 @@ public class SingleGame {
 
     private boolean checkVerticalDown(final char symbol, final Character[][] arrayForChecks, final PlayerMove move) { // sprawdzenie dolu od symbolu
         if (board.getRowsNumber() - move.getRowIndex() > 2) {
-            for (int row = move.getRowIndex(); row <= board.getRowsNumber() - 2; row++) {
+            for (int row = move.getRowIndex(); row <= row + 2; row++) {
                 if (arrayForChecks[row][move.getColumnIndex()] == null || arrayForChecks[row][move.getColumnIndex()] != symbol) {
                     return false;
                 }
