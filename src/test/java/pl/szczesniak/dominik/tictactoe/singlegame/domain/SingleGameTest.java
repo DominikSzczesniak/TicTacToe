@@ -15,6 +15,7 @@ import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.Symbol;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
+import static org.assertj.core.api.Assertions.fail;
 import static pl.szczesniak.dominik.tictactoe.singlegame.domain.model.GameStatus.DRAW;
 import static pl.szczesniak.dominik.tictactoe.singlegame.domain.model.GameStatus.IN_PROGRESS;
 import static pl.szczesniak.dominik.tictactoe.singlegame.domain.model.GameStatus.WIN;
@@ -220,10 +221,9 @@ class SingleGameTest {
         assertThat(tut.makeMove(playerTwo, new PlayerMove(1, 1)).getGameStatus()).isEqualTo(IN_PROGRESS);
         assertThat(tut.makeMove(playerOne, new PlayerMove(0, 1)).getGameStatus()).isEqualTo(IN_PROGRESS);
         GameResult finalGameResult = tut.makeMove(playerTwo, new PlayerMove(1, 2));
-        assertThat(finalGameResult.getGameStatus()).isEqualTo(IN_PROGRESS);
 
         // then
-        assertThat(tut.isDraw()).isEqualTo(false);
+        assertThat(finalGameResult.getGameStatus()).isEqualTo(IN_PROGRESS);
     }
 
     @Test
@@ -240,10 +240,18 @@ class SingleGameTest {
         assertThat(tut.makeMove(playerTwo, new PlayerMove(2, 2)).getGameStatus()).isEqualTo(IN_PROGRESS);
         assertThat(tut.makeMove(playerOne, new PlayerMove(2, 1)).getGameStatus()).isEqualTo(IN_PROGRESS);
         assertThat(tut.makeMove(playerTwo, new PlayerMove(1, 2)).getGameStatus()).isEqualTo(IN_PROGRESS);
-        assertThat(tut.makeMove(playerOne, new PlayerMove(0, 2)).getGameStatus()).isEqualTo(DRAW);
 
         // then
-        assertThat(tut.isDraw()).isEqualTo(true);
+        assertThat(tut.makeMove(playerOne, new PlayerMove(0, 2)).getGameStatus()).isEqualTo(DRAW);
+    }
+
+    @Test
+    void name() {
+        fail("TODO: GameOverException when some won");
+    }
+    @Test
+    void name2() {
+        fail("TODO: GameOverException when DRAW");
     }
 
     @Test

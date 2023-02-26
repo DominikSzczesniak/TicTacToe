@@ -217,7 +217,7 @@ public class SingleGame {
         return true;
     }
 
-    public boolean isDraw() {
+    private boolean isDraw() {
         final Character[][] drawArray = getBoardView();
         for (int i = 0; i < board.getRowsNumber(); i++) {
             for (int k = 0; k < board.getColumnNumber(); k++) {
