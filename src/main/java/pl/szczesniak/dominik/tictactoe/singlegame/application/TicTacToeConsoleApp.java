@@ -41,7 +41,7 @@ public class TicTacToeConsoleApp {
 	}
 
 	public void run() {
-		final SingleGame game = new SingleGame(playerOne, playerTwo, 4);
+		final SingleGame game = new SingleGame(playerOne, playerTwo, 3);
 		final BoardPrinter printer = new BoardPrinter(game.getSize());
 		printer.printBoardWithNumbers(game.getBoardView());
 		GameResult latestResult;
@@ -56,7 +56,7 @@ public class TicTacToeConsoleApp {
 		do {
 			printer.printBoard(game.getBoardView());
 			System.out.println(nextPlayer.getName() + " (" + nextPlayer.getSymbol() + ") please enter a number 1-9 with unoccupied place");
-			latestResult = makeMove(game, scan, translator, nextPlayer);
+			latestResult = makeMove(game, translator, nextPlayer);
 			nextPlayer = nextPlayer == playerTwo ? playerOne : playerTwo;
 		} while (latestResult.getGameStatus().equals(GameStatus.IN_PROGRESS));
 
@@ -73,13 +73,14 @@ public class TicTacToeConsoleApp {
 		}
 	}
 
-	private GameResult makeMove(SingleGame game, Scanner scan, FieldNumberTranslator translator, Player nextPlayer) {
-		final FieldCoordinates coordinates = translator.toCoordinates(getNumber(scan), game.getBoardView().length);
+	private GameResult makeMove(SingleGame game,FieldNumberTranslator translator, Player nextPlayer) {
+		String line = getSpot();
+		final FieldCoordinates coordinates = translator.toCoordinates(getLetter(line), getNumberCoordinate(line), game.getBoardView().length);
 		try {
 			return game.makeMove(nextPlayer, new PlayerMove(coordinates.getRow(), coordinates.getColumn()));
 		} catch (SpotAlreadyTakenOnBoardException exception) {
 			System.out.println("Spot is taken, choose different number");
-			return makeMove(game, scan, translator, nextPlayer);
+			return makeMove(game, translator, nextPlayer);
 		}
 	}
 
@@ -103,6 +104,17 @@ public class TicTacToeConsoleApp {
 
 	private int getNumber(Scanner scanner) {
 		return Integer.parseInt(scanner.nextLine());
+	}
+
+	private String getSpot() {
+		return scan.nextLine();
+	}
+
+	private Integer getNumberCoordinate(String line) {
+		return Integer.parseInt(String.valueOf(line.charAt(1)));
+	}
+	private char getLetter(String line) {
+		return Character.toLowerCase(line.charAt(0));
 	}
 
 	private char getSymbol(Scanner scanner) {
