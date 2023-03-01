@@ -15,8 +15,8 @@ class FieldNumberTranslator {
             counter++;
         }
 
-        int row = (numberOfLetter) % length;
-        int column = (number - 1) % length;
+        final int row = (numberOfLetter) % length;
+        final int column = (number - 1) % length;
 
         return new FieldCoordinates(row, column);
     }
