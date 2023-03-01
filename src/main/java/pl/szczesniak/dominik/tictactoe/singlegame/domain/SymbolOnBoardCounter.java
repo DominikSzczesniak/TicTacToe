@@ -2,8 +2,6 @@ package pl.szczesniak.dominik.tictactoe.singlegame.domain;
 
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.Symbol;
 
-import java.util.Objects;
-
 class SymbolOnBoardCounter {
 
 	private final Symbol symbol;
@@ -14,20 +12,20 @@ class SymbolOnBoardCounter {
 		this.board = board;
 	}
 
-	int countSymbolInSequenceHorizontally(int rowIndex) {
+	int countSymbolInSequenceHorizontally(final int rowIndex) {
 		int number = 0;
 		int secondNumber = 0;
 
 		for (int index = 0; index < board.length; index++) {
-			if (number == 0 && board[rowIndex][index] != null && board[rowIndex][index] == symbol.getValue()) {
+			if (number == 0 && checkIfCurrentIndexIsNotNull(rowIndex, index) && isIndexEqualSymbol(index, rowIndex)) {
 				number++;
-			} else if (number > 0 && board[rowIndex][index - 1] != null && board[rowIndex][index - 1] == symbol.getValue()
-					&& board[rowIndex][index] != null && board[rowIndex][index] == symbol.getValue()) {
+			} else if (number > 0 && checkIfCurrentIndexIsNotNull(rowIndex, index - 1) && isIndexEqualSymbol(index - 1, rowIndex)
+					&& checkIfCurrentIndexIsNotNull(rowIndex, index) && isIndexEqualSymbol(index, rowIndex)) {
 				number++;
 			}
 
 			if (board[rowIndex][index] == null || board[rowIndex][index] != symbol.getValue()
-					|| board[rowIndex][index] == symbol.getValue() && index == board.length - 1) {
+					|| isIndexEqualSymbol(index, rowIndex) && index == board.length - 1) {
 				if (number > secondNumber) {
 					secondNumber = number;
 					number = 0;
@@ -38,20 +36,28 @@ class SymbolOnBoardCounter {
 		return secondNumber;
 	}
 
+	private boolean checkIfCurrentIndexIsNotNull(final int rowIndex, final int index) {
+		return board[rowIndex][index] != null;
+	}
+
+	private boolean isIndexEqualSymbol(final int columnIndex, final int index) {
+		return board[index][columnIndex] == symbol.getValue();
+	}
+
 	int maxCountSymbolInSequenceVertically(int columnIndex) {
 		int number = 0;
 		int secondNumber = 0;
 
 		for (int index = 0; index < board.length; index++) {
-			if (number == 0 && board[index][columnIndex] != null && board[index][columnIndex] == symbol.getValue()) {
+			if (number == 0 && checkIfCurrentIndexIsNotNull(index, columnIndex) && isIndexEqualSymbol(columnIndex, index)) {
 				number++;
-			} else if (number > 0 && board[index - 1][columnIndex] != null && board[index - 1][columnIndex] == symbol.getValue()
-					&& board[index][columnIndex] != null && board[index][columnIndex] == symbol.getValue()) {
+			} else if (number > 0 && checkIfCurrentIndexIsNotNull(index - 1, columnIndex) && isIndexEqualSymbol(columnIndex, index - 1)
+					&& checkIfCurrentIndexIsNotNull(index, columnIndex) && isIndexEqualSymbol(columnIndex, index)) {
 				number++;
 			}
 
 			if (board[index][columnIndex] == null || board[index][columnIndex] != symbol.getValue()    // TO PODEJRZEC TO PODEJRZECTO PODEJRZECTO PODEJRZEC
-					|| board[index][columnIndex] == symbol.getValue() && index == board.length - 1) {
+					|| isIndexEqualSymbol(columnIndex, index) && index == board.length - 1) {
 				if (number > secondNumber) {
 					secondNumber = number;
 					number = 0;
@@ -63,41 +69,17 @@ class SymbolOnBoardCounter {
 	}
 
 	int countSymbolInSequenceDiagonally(int rowIndex, int columnIndex) {
-		int number = 0;
-		int secondNumber = 0;
-		int startingRowIndex = rowIndex;
-		int startingColumnIndex = columnIndex;
+		int cursor = 0;
+		int firstDiagonal = 0;
+		int secondDiagonal = 0;
 
-		while (rowIndex != 0 && columnIndex != 0) {
-			rowIndex--;
-			columnIndex--;
-		}
+		firstDiagonal = checkTopLeftToBotRightDiagonal(rowIndex, columnIndex, cursor, firstDiagonal);
+		secondDiagonal = checkBotLeftToTopRightDiagonal(rowIndex, columnIndex, cursor, firstDiagonal);
 
-		for (; rowIndex < board.length; rowIndex++) {
-			if (columnIndex < board.length) {
-				if (number == 0 && board[rowIndex][columnIndex] != null && board[rowIndex][columnIndex] == symbol.getValue()) {
-					number++;
-				} else if (number > 0 && board[rowIndex - 1][columnIndex - 1] != null && board[rowIndex - 1][columnIndex - 1] == symbol.getValue()
-				&& board[rowIndex][columnIndex] != null && board[rowIndex][columnIndex] == symbol.getValue()) {
-					number++;
-				}
+		return Math.max(firstDiagonal, secondDiagonal);
+	}
 
-				if (board[rowIndex][columnIndex] == null || board[rowIndex][columnIndex] != symbol.getValue()
-						|| board[rowIndex][columnIndex] == symbol.getValue() && rowIndex == board.length - 1 || columnIndex == board.length - 1) {
-					if (number > secondNumber) {
-						secondNumber = number;
-						number = 0;
-					}
-				}
-				columnIndex++;
-			}
-		}
-
-		number = 0;
-
-		rowIndex = startingRowIndex;
-		columnIndex = startingColumnIndex;
-
+	private int checkBotLeftToTopRightDiagonal(int rowIndex, int columnIndex, int number, int secondNumber) {
 		while (rowIndex != board.length - 1 && columnIndex != 0) {
 			rowIndex++;
 			columnIndex--;
@@ -105,15 +87,15 @@ class SymbolOnBoardCounter {
 
 		for (; rowIndex >= 0; rowIndex--) {
 			if (columnIndex < board.length) {
-				if (number == 0 && board[rowIndex][columnIndex] != null && board[rowIndex][columnIndex] == symbol.getValue()) {
+				if (number == 0 && checkIfCurrentIndexIsNotNull(rowIndex, columnIndex) && isIndexEqualSymbol(columnIndex, rowIndex)) {
 					number++;
-				} else if (number > 0 && board[rowIndex + 1][columnIndex - 1] != null && board[rowIndex + 1][columnIndex - 1] == symbol.getValue()
-				&& board[rowIndex][columnIndex] != null && board[rowIndex][columnIndex] == symbol.getValue()) {
+				} else if (number > 0 && checkIfCurrentIndexIsNotNull(rowIndex + 1, columnIndex - 1) && isIndexEqualSymbol(columnIndex - 1, rowIndex + 1)
+						&& checkIfCurrentIndexIsNotNull(rowIndex, columnIndex) && isIndexEqualSymbol(columnIndex, rowIndex)) {
 					number++;
 				}
 
 				if (board[rowIndex][columnIndex] == null || board[rowIndex][columnIndex] != symbol.getValue()
-				|| board[rowIndex][columnIndex] == symbol.getValue() && rowIndex == 0) {
+						|| isIndexEqualSymbol(columnIndex, rowIndex) && rowIndex == 0) {
 					if (number > secondNumber) {
 						secondNumber = number;
 						number = 0;
@@ -122,7 +104,34 @@ class SymbolOnBoardCounter {
 				columnIndex++;
 			}
 		}
+		return secondNumber;
+	}
 
+	private int checkTopLeftToBotRightDiagonal(int rowIndex, int columnIndex, int number, int secondNumber) {
+		while (rowIndex != 0 && columnIndex != 0) {
+			rowIndex--;
+			columnIndex--;
+		}
+
+		for (; rowIndex < board.length; rowIndex++) {
+			if (columnIndex < board.length) {
+				if (number == 0 && checkIfCurrentIndexIsNotNull(rowIndex, columnIndex) && isIndexEqualSymbol(columnIndex, rowIndex)) {
+					number++;
+				} else if (number > 0 && checkIfCurrentIndexIsNotNull(rowIndex - 1, columnIndex - 1) && isIndexEqualSymbol(columnIndex - 1, rowIndex - 1)
+						&& checkIfCurrentIndexIsNotNull(rowIndex, columnIndex) && isIndexEqualSymbol(columnIndex, rowIndex)) {
+					number++;
+				}
+
+				if (board[rowIndex][columnIndex] == null || board[rowIndex][columnIndex] != symbol.getValue()
+						|| isIndexEqualSymbol(columnIndex, rowIndex) && rowIndex == board.length - 1 || columnIndex == board.length - 1) {
+					if (number > secondNumber) {
+						secondNumber = number;
+						number = 0;
+					}
+				}
+				columnIndex++;
+			}
+		}
 		return secondNumber;
 	}
 

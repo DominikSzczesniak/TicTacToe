@@ -298,8 +298,7 @@ class SingleGameTest {
         assertThat(tut.makeMove(playerTwo, new PlayerMove(3, 0)).getGameStatus()).isEqualTo(IN_PROGRESS);
         assertThat(tut.makeMove(playerOne, new PlayerMove(0, 1)).getGameStatus()).isEqualTo(IN_PROGRESS);
         assertThat(tut.makeMove(playerTwo, new PlayerMove(2, 1)).getGameStatus()).isEqualTo(IN_PROGRESS);
-        assertThat(tut.makeMove(playerOne, new PlayerMove(1, 3)).getGameStatus()).isEqualTo(IN_PROGRESS);
-        assertThat(tut.makeMove(playerTwo, new PlayerMove(1, 2)).getGameStatus()).isEqualTo(IN_PROGRESS);
+        assertThat(tut.makeMove(playerOne, new PlayerMove(0, 2)).getGameStatus()).isEqualTo(WIN);
     }
 
         @Test
