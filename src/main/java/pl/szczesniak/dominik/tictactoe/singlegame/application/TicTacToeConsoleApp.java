@@ -41,9 +41,8 @@ public class TicTacToeConsoleApp {
 	}
 
 	public void run() {
-		final SingleGame game = new SingleGame(playerOne, playerTwo, 3);
+		final SingleGame game = new SingleGame(playerOne, playerTwo, 5);
 		final BoardPrinter printer = new BoardPrinter(game.getSize());
-		printer.printBoardWithNumbers(game.getBoardView());
 		GameResult latestResult;
 		Player nextPlayer;
 
@@ -55,7 +54,7 @@ public class TicTacToeConsoleApp {
 
 		do {
 			printer.printBoard(game.getBoardView());
-			System.out.println(nextPlayer.getName() + " (" + nextPlayer.getSymbol() + ") please enter a number 1-9 with unoccupied place");
+			System.out.println(nextPlayer.getName() + " (" + nextPlayer.getSymbol() + ") please enter coordinates (e.g. C2) with unoccupied place");
 			latestResult = makeMove(game, translator, nextPlayer);
 			nextPlayer = nextPlayer == playerTwo ? playerOne : playerTwo;
 		} while (latestResult.getGameStatus().equals(GameStatus.IN_PROGRESS));
@@ -75,7 +74,7 @@ public class TicTacToeConsoleApp {
 
 	private GameResult makeMove(SingleGame game,FieldNumberTranslator translator, Player nextPlayer) {
 		String line = getSpot();
-		final FieldCoordinates coordinates = translator.toCoordinates(getLetter(line), getNumberCoordinate(line), game.getBoardView().length);
+		final FieldCoordinates coordinates = translator.toCoordinates(getLetterCoordinate(line), getNumberCoordinate(line), game.getBoardView().length);
 		try {
 			return game.makeMove(nextPlayer, new PlayerMove(coordinates.getRow(), coordinates.getColumn()));
 		} catch (SpotAlreadyTakenOnBoardException exception) {
@@ -106,15 +105,15 @@ public class TicTacToeConsoleApp {
 		return Integer.parseInt(scanner.nextLine());
 	}
 
-	private String getSpot() {
-		return scan.nextLine();
+	private char getLetterCoordinate(String line) {
+		return Character.toLowerCase(line.charAt(0));
 	}
 
 	private Integer getNumberCoordinate(String line) {
 		return Integer.parseInt(String.valueOf(line.charAt(1)));
 	}
-	private char getLetter(String line) {
-		return Character.toLowerCase(line.charAt(0));
+	private String getSpot() {
+		return scan.nextLine();
 	}
 
 	private char getSymbol(Scanner scanner) {

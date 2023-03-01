@@ -3,7 +3,7 @@ package pl.szczesniak.dominik.tictactoe.singlegame.application;
 public class BoardPrinter {
 
 	private final Character[][] boardPrint;
-	private final int[][] boardWithNumbers;
+//	private final int[][] boardWithNumbers;
 
 	BoardPrinter(final int size) {
 		boardPrint = new Character[size][size];
@@ -13,14 +13,14 @@ public class BoardPrinter {
 			}
 		}
 
-		int i = 1;
-		boardWithNumbers = new int[size][size];
-		for (int row = 0; row < size; row++) {
-			for (int column = 0; column < size; column++) {
-				boardWithNumbers[row][column] = i;
-				i++;
-			}
-		}
+//		int i = 1;
+//		boardWithNumbers = new int[size][size];
+//		for (int row = 0; row < size; row++) {
+//			for (int column = 0; column < size; column++) {
+//				boardWithNumbers[row][column] = i;
+//				i++;
+//			}
+//		}
 	}
 
 //	  -------------------------------------------------------------         -------------------------------
@@ -46,28 +46,40 @@ public class BoardPrinter {
 				}
 			}
 		}
+		char alphabet = 'A';
 		int length = board.length - 1;
+		System.out.print("  ");
+		for (int number = 1; number <= board.length; number++) {
+			System.out.print("     " + number + "    ");
+		}
+		System.out.println();
+		System.out.print("  ");
 		for (int i = 0; i <= length; i++) {
 			System.out.print(" ---------");
 		}
 		for (int row = 0; row < board.length; row++) {
 			for (int column = 0; column < board.length; column = column + board.length) {
 				System.out.println();
+				System.out.print("  ");
 				for (int i = 0; i <= length; i++) {
 					System.out.print("|         ");
 				}
 				System.out.print("|");
 				System.out.println();
+				System.out.print(alphabet + " ");
+				alphabet++;
 				for (int i = 0; i <= length; i++) {
 					System.out.print("|    " + boardPrint[row][i] + "    ");
 				}
 				System.out.print("|");
 				System.out.println();
+				System.out.print("  ");
 				for (int i = 0; i <= length; i++) {
 					System.out.print("|         ");
 				}
 				System.out.print("|");
 				System.out.println();
+				System.out.print("  ");
 				for (int i = 0; i <= length; i++) {
 					System.out.print(" ---------");
 				}
@@ -75,37 +87,5 @@ public class BoardPrinter {
 		}
 		System.out.println();
 	}
-
-	public void printBoardWithNumbers(Character[][] board) {
-		int length = board.length - 1;
-		for (int i = 0; i <= length; i++) {
-			System.out.print(" ---------");
-		}
-		for (int row = 0; row < board.length; row++) {
-			for (int column = 0; column < board.length; column = column + board.length) {
-				System.out.println();
-				for (int i = 0; i <= length; i++) {
-					System.out.print("|         ");
-				}
-				System.out.print("|");
-				System.out.println();
-				for (int i = 0; i <= length; i++) {
-					System.out.print("|    " + boardWithNumbers[row][i] + "    ");
-				}
-				System.out.print("|");
-				System.out.println();
-				for (int i = 0; i <= length; i++) {
-					System.out.print("|         ");
-				}
-				System.out.print("|");
-				System.out.println();
-				for (int i = 0; i <= length; i++) {
-					System.out.print(" ---------");
-				}
-			}
-		}
-		System.out.println();
-	}
-
 }
 

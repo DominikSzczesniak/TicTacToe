@@ -1,7 +1,5 @@
 package pl.szczesniak.dominik.tictactoe.singlegame.application;
 
-import pl.szczesniak.dominik.tictactoe.singlegame.domain.SingleGame;
-
 class FieldNumberTranslator {
 
 
