@@ -17,15 +17,15 @@ class SymbolOnBoardCounter {
 		int secondNumber = 0;
 
 		for (int index = 0; index < board.length; index++) {
-			if (number == 0 && checkIfCurrentIndexIsNotNull(rowIndex, index) && isIndexEqualSymbol(index, rowIndex)) {
+			if (number == 0 && checkIfNotNull(rowIndex, index) && isEqualSymbol(index, rowIndex)) {
 				number++;
-			} else if (number > 0 && checkIfCurrentIndexIsNotNull(rowIndex, index - 1) && isIndexEqualSymbol(index - 1, rowIndex)
-					&& checkIfCurrentIndexIsNotNull(rowIndex, index) && isIndexEqualSymbol(index, rowIndex)) {
+			} else if (number > 0 && checkIfNotNull(rowIndex, index - 1) && isEqualSymbol(index - 1, rowIndex)
+					&& checkIfNotNull(rowIndex, index) && isEqualSymbol(index, rowIndex)) {
 				number++;
 			}
 
 			if (board[rowIndex][index] == null || board[rowIndex][index] != symbol.getValue()
-					|| isIndexEqualSymbol(index, rowIndex) && index == board.length - 1) {
+					|| isEqualSymbol(index, rowIndex) && index == board.length - 1) {
 				if (number > secondNumber) {
 					secondNumber = number;
 					number = 0;
@@ -36,11 +36,11 @@ class SymbolOnBoardCounter {
 		return secondNumber;
 	}
 
-	private boolean checkIfCurrentIndexIsNotNull(final int rowIndex, final int index) {
+	private boolean checkIfNotNull(final int rowIndex, final int index) {
 		return board[rowIndex][index] != null;
 	}
 
-	private boolean isIndexEqualSymbol(final int columnIndex, final int index) {
+	private boolean isEqualSymbol(final int columnIndex, final int index) {
 		return board[index][columnIndex] == symbol.getValue();
 	}
 
@@ -49,15 +49,15 @@ class SymbolOnBoardCounter {
 		int secondNumber = 0;
 
 		for (int index = 0; index < board.length; index++) {
-			if (number == 0 && checkIfCurrentIndexIsNotNull(index, columnIndex) && isIndexEqualSymbol(columnIndex, index)) {
+			if (number == 0 && checkIfNotNull(index, columnIndex) && isEqualSymbol(columnIndex, index)) {
 				number++;
-			} else if (number > 0 && checkIfCurrentIndexIsNotNull(index - 1, columnIndex) && isIndexEqualSymbol(columnIndex, index - 1)
-					&& checkIfCurrentIndexIsNotNull(index, columnIndex) && isIndexEqualSymbol(columnIndex, index)) {
+			} else if (number > 0 && checkIfNotNull(index - 1, columnIndex) && isEqualSymbol(columnIndex, index - 1)
+					&& checkIfNotNull(index, columnIndex) && isEqualSymbol(columnIndex, index)) {
 				number++;
 			}
 
 			if (board[index][columnIndex] == null || board[index][columnIndex] != symbol.getValue()    // TO PODEJRZEC TO PODEJRZECTO PODEJRZECTO PODEJRZEC
-					|| isIndexEqualSymbol(columnIndex, index) && index == board.length - 1) {
+					|| isEqualSymbol(columnIndex, index) && index == board.length - 1) {
 				if (number > secondNumber) {
 					secondNumber = number;
 					number = 0;
@@ -87,15 +87,15 @@ class SymbolOnBoardCounter {
 
 		for (; rowIndex >= 0; rowIndex--) {
 			if (columnIndex < board.length) {
-				if (number == 0 && checkIfCurrentIndexIsNotNull(rowIndex, columnIndex) && isIndexEqualSymbol(columnIndex, rowIndex)) {
+				if (number == 0 && checkIfNotNull(rowIndex, columnIndex) && isEqualSymbol(columnIndex, rowIndex)) {
 					number++;
-				} else if (number > 0 && checkIfCurrentIndexIsNotNull(rowIndex + 1, columnIndex - 1) && isIndexEqualSymbol(columnIndex - 1, rowIndex + 1)
-						&& checkIfCurrentIndexIsNotNull(rowIndex, columnIndex) && isIndexEqualSymbol(columnIndex, rowIndex)) {
+				} else if (number > 0 && checkIfNotNull(rowIndex + 1, columnIndex - 1) && isEqualSymbol(columnIndex - 1, rowIndex + 1)
+						&& checkIfNotNull(rowIndex, columnIndex) && isEqualSymbol(columnIndex, rowIndex)) {
 					number++;
 				}
 
 				if (board[rowIndex][columnIndex] == null || board[rowIndex][columnIndex] != symbol.getValue()
-						|| isIndexEqualSymbol(columnIndex, rowIndex) && rowIndex == 0) {
+						|| isEqualSymbol(columnIndex, rowIndex) && rowIndex == 0) {
 					if (number > secondNumber) {
 						secondNumber = number;
 						number = 0;
@@ -115,15 +115,15 @@ class SymbolOnBoardCounter {
 
 		for (; rowIndex < board.length; rowIndex++) {
 			if (columnIndex < board.length) {
-				if (number == 0 && checkIfCurrentIndexIsNotNull(rowIndex, columnIndex) && isIndexEqualSymbol(columnIndex, rowIndex)) {
+				if (number == 0 && checkIfNotNull(rowIndex, columnIndex) && isEqualSymbol(columnIndex, rowIndex)) {
 					number++;
-				} else if (number > 0 && checkIfCurrentIndexIsNotNull(rowIndex - 1, columnIndex - 1) && isIndexEqualSymbol(columnIndex - 1, rowIndex - 1)
-						&& checkIfCurrentIndexIsNotNull(rowIndex, columnIndex) && isIndexEqualSymbol(columnIndex, rowIndex)) {
+				} else if (number > 0 && checkIfNotNull(rowIndex - 1, columnIndex - 1) && isEqualSymbol(columnIndex - 1, rowIndex - 1)
+						&& checkIfNotNull(rowIndex, columnIndex) && isEqualSymbol(columnIndex, rowIndex)) {
 					number++;
 				}
 
 				if (board[rowIndex][columnIndex] == null || board[rowIndex][columnIndex] != symbol.getValue()
-						|| isIndexEqualSymbol(columnIndex, rowIndex) && rowIndex == board.length - 1 || columnIndex == board.length - 1) {
+						|| isEqualSymbol(columnIndex, rowIndex) && rowIndex == board.length - 1 || columnIndex == board.length - 1) {
 					if (number > secondNumber) {
 						secondNumber = number;
 						number = 0;

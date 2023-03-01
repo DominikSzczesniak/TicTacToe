@@ -15,6 +15,7 @@ import java.util.Set;
 
 public class SingleGame {
 
+    private final int size;
     private final Board board;
     private final Set<Symbol> supportedSymbols = Set.of(new Symbol('X'), new Symbol('O'));
     private final Player playerOne;
@@ -34,6 +35,7 @@ public class SingleGame {
         board = new Board(size, size);
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
+        this.size = size;
     }
 
 
@@ -107,4 +109,7 @@ public class SingleGame {
         return true;
     }
 
+    public int getSize() {
+        return size;
+    }
 }

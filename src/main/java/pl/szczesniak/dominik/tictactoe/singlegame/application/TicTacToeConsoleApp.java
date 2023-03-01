@@ -8,12 +8,10 @@ import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.Player;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.PlayerMove;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.Name;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.Symbol;
-
 import java.util.Scanner;
 
 public class TicTacToeConsoleApp {
 
-	public static final Symbol SYMBOL_O = new Symbol('O');
 	final Scanner scan = new Scanner(System.in);
 	private final Player playerOne;
 	private final Player playerTwo;
@@ -21,9 +19,15 @@ public class TicTacToeConsoleApp {
 	private final FieldNumberTranslator translator = new FieldNumberTranslator();
 
 	public TicTacToeConsoleApp() {
-		System.out.println("Welcome to a single game of tic tac toe.");
-		System.out.println("The game consists of 2 players, each with a symbol X or O, player with symbol O gets to move first.");
-		System.out.println("Player 1, choose your name");
+		System.out.println();
+		System.out.println("|----------------------------------------|");
+		System.out.println("|Welcome to a single game of tic tac toe.|");
+		System.out.println("|----------------------------------------|");
+		System.out.println();
+		System.out.println("-------------------------------------------------------------------------------------------------------");
+		System.out.println("|The game consists of 2 players, each with a symbol - X or O, player with symbol O gets to move first.|");
+		System.out.println("-------------------------------------------------------------------------------------------------------");
+		System.out.println("Player 1, choose your name:");
 		Name nameOne = new Name(scan.nextLine());
 		System.out.println(nameOne.getName() + " choose your symbol, enter O or X");
 		playerOne = new Player(new Symbol(getSymbol(scan)), nameOne);
@@ -37,13 +41,13 @@ public class TicTacToeConsoleApp {
 	}
 
 	public void run() {
-		final BoardPrinter printer = new BoardPrinter();
-		final SingleGame game = new SingleGame(playerOne, playerTwo, 3);
+		final SingleGame game = new SingleGame(playerOne, playerTwo, 4);
+		final BoardPrinter printer = new BoardPrinter(game.getSize());
 		printer.printBoardWithNumbers(game.getBoardView());
 		GameResult latestResult;
 		Player nextPlayer;
 
-		if (playerOne.getSymbol() == SYMBOL_O) {
+		if (playerOne.getSymbol().getValue() == 'O') {
 			nextPlayer = playerOne;
 		} else {
 			nextPlayer = playerTwo;
@@ -51,7 +55,7 @@ public class TicTacToeConsoleApp {
 
 		do {
 			printer.printBoard(game.getBoardView());
-			System.out.println(nextPlayer.getName() + " with symbol: " + nextPlayer.getSymbol() + ", to move");
+			System.out.println(nextPlayer.getName() + " (" + nextPlayer.getSymbol() + ") please enter a number 1-9 with unoccupied place");
 			latestResult = makeMove(game, scan, translator, nextPlayer);
 			nextPlayer = nextPlayer == playerTwo ? playerOne : playerTwo;
 		} while (latestResult.getGameStatus().equals(GameStatus.IN_PROGRESS));
@@ -70,7 +74,7 @@ public class TicTacToeConsoleApp {
 	}
 
 	private GameResult makeMove(SingleGame game, Scanner scan, FieldNumberTranslator translator, Player nextPlayer) {
-		final FieldCoordinates coordinates = translator.toCoordinates(getNumber(scan));
+		final FieldCoordinates coordinates = translator.toCoordinates(getNumber(scan), game.getBoardView().length);
 		try {
 			return game.makeMove(nextPlayer, new PlayerMove(coordinates.getRow(), coordinates.getColumn()));
 		} catch (SpotAlreadyTakenOnBoardException exception) {

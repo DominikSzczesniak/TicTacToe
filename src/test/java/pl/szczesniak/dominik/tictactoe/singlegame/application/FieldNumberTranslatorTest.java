@@ -8,13 +8,15 @@ class FieldNumberTranslatorTest {
 
     private FieldCoordinates coordinates;
 
+
+
     @Test
     void should_return_0_and_0_coordinates_when_passed_1_as_an_argument() {
         // given
        final FieldNumberTranslator tut = new FieldNumberTranslator();
 
         // when
-        coordinates = tut.toCoordinates(1);
+        coordinates = tut.toCoordinates(1, 3);
 
         // then
         assertThat(coordinates.getRow()).isEqualTo(0);
@@ -27,7 +29,7 @@ class FieldNumberTranslatorTest {
         final FieldNumberTranslator tut = new FieldNumberTranslator();
 
         // when
-        coordinates = tut.toCoordinates(2);
+        coordinates = tut.toCoordinates(2,3);
 
         // then
         assertThat(coordinates.getRow()).isEqualTo(0);
@@ -40,7 +42,7 @@ class FieldNumberTranslatorTest {
         final FieldNumberTranslator tut = new FieldNumberTranslator();
 
         // when
-        coordinates = tut.toCoordinates(3);
+        coordinates = tut.toCoordinates(3,3);
 
         // then
         assertThat(coordinates.getRow()).isEqualTo(0);
@@ -53,7 +55,7 @@ class FieldNumberTranslatorTest {
         final FieldNumberTranslator tut = new FieldNumberTranslator();
 
         // when
-        coordinates = tut.toCoordinates(4);
+        coordinates = tut.toCoordinates(4,3);
 
         // then
         assertThat(coordinates.getRow()).isEqualTo(1);
@@ -66,7 +68,7 @@ class FieldNumberTranslatorTest {
         final FieldNumberTranslator tut = new FieldNumberTranslator();
 
         // when
-        coordinates = tut.toCoordinates(5);
+        coordinates = tut.toCoordinates(5,3);
 
         // then
         assertThat(coordinates.getRow()).isEqualTo(1);
@@ -79,7 +81,7 @@ class FieldNumberTranslatorTest {
         final FieldNumberTranslator tut = new FieldNumberTranslator();
 
         // when
-        coordinates = tut.toCoordinates(6);
+        coordinates = tut.toCoordinates(6,3);
 
         // then
         assertThat(coordinates.getRow()).isEqualTo(1);
@@ -92,7 +94,7 @@ class FieldNumberTranslatorTest {
         final FieldNumberTranslator tut = new FieldNumberTranslator();
 
         // when
-        coordinates = tut.toCoordinates(7);
+        coordinates = tut.toCoordinates(7,3);
 
         // then
         assertThat(coordinates.getRow()).isEqualTo(2);
@@ -105,7 +107,7 @@ class FieldNumberTranslatorTest {
         final FieldNumberTranslator tut = new FieldNumberTranslator();
 
         // when
-        coordinates = tut.toCoordinates(8);
+        coordinates = tut.toCoordinates(8,3);
 
         // then
         assertThat(coordinates.getRow()).isEqualTo(2);
@@ -118,11 +120,11 @@ class FieldNumberTranslatorTest {
         final FieldNumberTranslator tut = new FieldNumberTranslator();
 
         // when
-        coordinates = tut.toCoordinates(9);
+        coordinates = tut.toCoordinates(9, 4);
 
         // then
         assertThat(coordinates.getRow()).isEqualTo(2);
-        assertThat(coordinates.getColumn()).isEqualTo(2);
+        assertThat(coordinates.getColumn()).isEqualTo(0);
     }
 
     

@@ -21,17 +21,6 @@ class Board {
         return currentState[rowIndex][columnIndex] != null;
     }
 
-    boolean hasSymbolOnFields(char symbol, PairOfCoordinates first, PairOfCoordinates second, PairOfCoordinates third) {
-        return hasSymbolAtCoordinates(symbol, first)
-                && hasSymbolAtCoordinates(symbol, second)
-                && hasSymbolAtCoordinates(symbol, third);
-    }
-
-    private boolean hasSymbolAtCoordinates(char symbol, PairOfCoordinates first) {
-        final Character symbolAtCoordinates = currentState[first.getRow()][first.getColumn()];
-        return symbolAtCoordinates != null && symbolAtCoordinates.equals(symbol);
-    }
-
     Character[][] getCurrentState() {
         return deepCopy(currentState);
     }
