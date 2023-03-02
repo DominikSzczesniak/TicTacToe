@@ -1,5 +1,7 @@
 package pl.szczesniak.dominik.tictactoe.singlegame.domain.model;
 
+import java.util.Objects;
+
 public class GameResult {
     private final GameStatus gameStatus;
     private final Player whoWon;
@@ -22,6 +24,4 @@ public class GameResult {
     public Name getWhoWon() {
         return whoWon.getName();
     }
-
-
 }

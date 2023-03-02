@@ -1,5 +1,6 @@
 package pl.szczesniak.dominik.tictactoe.singlegame.domain;
 
+import pl.szczesniak.dominik.tictactoe.singlegame.domain.exceptions.GameOverException;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.exceptions.OtherPlayerTurnException;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.exceptions.PlayerIsNotThePartOfTheGameException;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.exceptions.SizeNotSupportedException;
@@ -21,21 +22,22 @@ public class SingleGame {
     private final Player playerOne;
     private final Player playerTwo;
     private Player latestMoveByPlayer;
+    private GameResult result;
 
-    public SingleGame(Player playerOne, Player playerTwo, int size) {
+    public SingleGame(Player playerOne, Player playerTwo, final int boardSize) {
         if (supportedSymbols.stream().noneMatch(marker -> marker.getValue() == playerOne.getSymbol().getValue())) {
             throw new SymbolIsUnsupportedException("Symbol " + playerOne.getSymbol().getValue() + " is unsupported.");
         }
         if (supportedSymbols.stream().noneMatch(marker -> marker.getValue() == playerTwo.getSymbol().getValue())) {
             throw new SymbolIsUnsupportedException("Symbol " + playerTwo.getSymbol().getValue() + " is unsupported.");
         }
-        if (size < 3) {
+        if (boardSize < 3) {
             throw new SizeNotSupportedException("Board must be size 3 or bigger");
         }
-        board = new Board(size, size);
+        board = new Board(boardSize, boardSize);
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
-        this.size = size;
+        this.size = boardSize;
     }
 
 
@@ -44,12 +46,24 @@ public class SingleGame {
     }
 
     public GameResult makeMove(final Player player, final PlayerMove move) {
+        if (result != null) {
+            checkIsGameInProgress(result, player);
+        }
         checkPlayerIsPartOfSingleGame(player);
         checkIsPlayerTurn(player);
         checkIsSpotNotTaken(player, move);
         board.placeSymbol(player.getSymbol().getValue(), move.getRowIndex(), move.getColumnIndex());
         latestMoveByPlayer = player;
-        return resolveGameResult(move);
+        return result = resolveGameResult(move);
+    }
+
+    private void checkIsGameInProgress(GameResult result, Player player) {
+        if (result.getGameStatus().equals(GameStatus.WIN)) {
+            throw new GameOverException("Game is already finished. Winner is " + player);
+        }
+        if (result.getGameStatus().equals(GameStatus.DRAW)) {
+            throw new GameOverException("Game ended in a draw");
+        }
     }
 
     private void checkPlayerIsPartOfSingleGame(Player player) {

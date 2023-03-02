@@ -2,6 +2,7 @@ package pl.szczesniak.dominik.tictactoe.singlegame.domain;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import pl.szczesniak.dominik.tictactoe.singlegame.domain.exceptions.GameOverException;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.exceptions.OtherPlayerTurnException;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.exceptions.PlayerIsNotThePartOfTheGameException;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.exceptions.SizeNotSupportedException;
@@ -246,11 +247,41 @@ class SingleGameTest {
     }
 
     @Test
-    void name() {
-        fail("TODO: GameOverException when some won");
+    void player_shouldnt_be_able_to_make_a_move_when_theres_a_winner() {
+        // given
+        final SingleGame tut = new SingleGame(playerOne, playerTwo, 3);
+        assertThat(tut.makeMove(playerOne, new PlayerMove(0, 0)).getGameStatus()).isEqualTo(IN_PROGRESS);
+        assertThat(tut.makeMove(playerTwo, new PlayerMove(1, 1)).getGameStatus()).isEqualTo(IN_PROGRESS);
+        assertThat(tut.makeMove(playerOne, new PlayerMove(0, 1)).getGameStatus()).isEqualTo(IN_PROGRESS);
+        assertThat(tut.makeMove(playerTwo, new PlayerMove(1, 2)).getGameStatus()).isEqualTo(IN_PROGRESS);
+        assertThat(tut.makeMove(playerOne, new PlayerMove(2, 1)).getGameStatus()).isEqualTo(IN_PROGRESS);
+        assertThat(tut.makeMove(playerTwo, new PlayerMove(1, 0)).getGameStatus()).isEqualTo(WIN);
+
+        // when
+        Throwable thrown = catchThrowable(() -> tut.makeMove(playerOne, new PlayerMove(0, 2)));
+
+        // then
+        assertThat(thrown).isInstanceOf(GameOverException.class);
     }
+
     @Test
     void name2() {
-        fail("TODO: GameOverException when DRAW");
+        // given
+        final SingleGame tut = new SingleGame(playerOne, playerTwo, 3);
+        assertThat(tut.makeMove(playerOne, new PlayerMove(0, 0)).getGameStatus()).isEqualTo(IN_PROGRESS);
+        assertThat(tut.makeMove(playerTwo, new PlayerMove(0, 1)).getGameStatus()).isEqualTo(IN_PROGRESS);
+        assertThat(tut.makeMove(playerOne, new PlayerMove(1, 0)).getGameStatus()).isEqualTo(IN_PROGRESS);
+        assertThat(tut.makeMove(playerTwo, new PlayerMove(2, 0)).getGameStatus()).isEqualTo(IN_PROGRESS);
+        assertThat(tut.makeMove(playerOne, new PlayerMove(1, 1)).getGameStatus()).isEqualTo(IN_PROGRESS);
+        assertThat(tut.makeMove(playerTwo, new PlayerMove(2, 2)).getGameStatus()).isEqualTo(IN_PROGRESS);
+        assertThat(tut.makeMove(playerOne, new PlayerMove(2, 1)).getGameStatus()).isEqualTo(IN_PROGRESS);
+        assertThat(tut.makeMove(playerTwo, new PlayerMove(1, 2)).getGameStatus()).isEqualTo(IN_PROGRESS);
+        assertThat(tut.makeMove(playerOne, new PlayerMove(0, 2)).getGameStatus()).isEqualTo(DRAW);
+
+        // when
+        Throwable thrown = catchThrowable(() -> tut.makeMove(playerOne, new PlayerMove(0, 2)));
+
+        // then
+        assertThat(thrown).isInstanceOf(GameOverException.class);
     }
 }

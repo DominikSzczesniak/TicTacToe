@@ -2,12 +2,14 @@ package pl.szczesniak.dominik.tictactoe.singlegame.application;
 
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.SingleGame;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.exceptions.SpotAlreadyTakenOnBoardException;
+import pl.szczesniak.dominik.tictactoe.singlegame.domain.exceptions.WrongCoordinatesException;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.GameResult;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.GameStatus;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.Player;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.PlayerMove;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.Name;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.Symbol;
+
 import java.util.Scanner;
 
 public class TicTacToeConsoleApp {
@@ -72,7 +74,7 @@ public class TicTacToeConsoleApp {
 		}
 	}
 
-	private GameResult makeMove(SingleGame game,FieldNumberTranslator translator, Player nextPlayer) {
+	private GameResult makeMove(SingleGame game, FieldNumberTranslator translator, Player nextPlayer) {
 		String line = getSpot();
 		final FieldCoordinates coordinates = translator.toCoordinates(getLetterCoordinate(line), getNumberCoordinate(line), game.getBoardView().length);
 		try {
@@ -105,6 +107,17 @@ public class TicTacToeConsoleApp {
 		return Integer.parseInt(scanner.nextLine());
 	}
 
+	private String getSpot() {
+		String coordinates = scan.nextLine();
+		try {
+			isCorrectCoordinates(coordinates);
+			return coordinates;
+		} catch (WrongCoordinatesException exception) {
+			System.out.println("Type in correct coordinates (e.g. C1, A3, b2).");
+			return getSpot();
+		}
+	}
+
 	private char getLetterCoordinate(String line) {
 		return Character.toLowerCase(line.charAt(0));
 	}
@@ -112,12 +125,16 @@ public class TicTacToeConsoleApp {
 	private Integer getNumberCoordinate(String line) {
 		return Integer.parseInt(String.valueOf(line.charAt(1)));
 	}
-	private String getSpot() {
-		return scan.nextLine();
+
+	private void isCorrectCoordinates(String line) {
+		if (!Character.isLetter(line.charAt(0)) || !Character.isDigit(line.charAt(1))) {
+			throw new WrongCoordinatesException();
+		}
 	}
 
 	private char getSymbol(Scanner scanner) {
 		String symbol = scanner.nextLine();
 		return symbol.charAt(0);
 	}
+
 }
