@@ -57,7 +57,7 @@ public class TicTacToeConsoleApp {
 		do {
 			printer.printBoard(game.getBoardView());
 			System.out.println(nextPlayer.getName() + " (" + nextPlayer.getSymbol() + ") please enter coordinates (e.g. C2) with unoccupied place");
-			latestResult = makeMove(game, translator, nextPlayer);
+			latestResult = placeSymbol(game, translator, nextPlayer);
 			nextPlayer = getNextPlayer(nextPlayer);
 		} while (latestResult.getGameStatus().equals(GameStatus.IN_PROGRESS));
 
@@ -77,7 +77,7 @@ public class TicTacToeConsoleApp {
 		return nextPlayer;
 	}
 
-	private GameResult makeMove(final SingleGame game, final FieldNumberTranslator translator, final Player nextPlayer) {
+	private GameResult placeSymbol(final SingleGame game, final FieldNumberTranslator translator, final Player nextPlayer) {
 		final String line = getSpot();
 		final FieldCoordinates coordinates = translator.toCoordinates(checker.getLetterCoordinate(line),
 				checker.getNumberCoordinate(line), game.getBoardView().length);
@@ -85,7 +85,7 @@ public class TicTacToeConsoleApp {
 			return game.makeMove(nextPlayer, new PlayerMove(coordinates.getRow(), coordinates.getColumn()));
 		} catch (SpotAlreadyTakenOnBoardException exception) {
 			System.out.println("Spot is taken, choose different number");
-			return makeMove(game, translator, nextPlayer);
+			return placeSymbol(game, translator, nextPlayer);
 		}
 	}
 
