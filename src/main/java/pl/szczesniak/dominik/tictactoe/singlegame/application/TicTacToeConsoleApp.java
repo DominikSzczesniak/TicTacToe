@@ -20,6 +20,7 @@ public class TicTacToeConsoleApp {
 	private SingleGame game;
 	private final Player playerOne;
 	private final Player playerTwo;
+	Symbol SYMBOL_O = new Symbol('O');
 	private int playAgain;
 
 	public TicTacToeConsoleApp() {
@@ -31,15 +32,17 @@ public class TicTacToeConsoleApp {
 		System.out.println("-------------------------------------------------------------------------------------------------------");
 		System.out.println("|The game consists of 2 players, each with a symbol - X or O, player with symbol O gets to move first.|");
 		System.out.println("-------------------------------------------------------------------------------------------------------");
+
 		System.out.println("Player 1, choose your name:");
 		Name nameOne = new Name(scan.nextLine());
 		System.out.println(nameOne.getName() + " choose your symbol, enter O or X");
 		playerOne = new Player(new Symbol(getSymbol(scan)), nameOne);
+
 		System.out.println("Player 2, choose your name");
-		if (playerOne.getSymbol().getValue() == 'O') {
+		if (playerOne.getSymbol().equals(SYMBOL_O)) {
 			playerTwo = new Player(new Symbol('X'), new Name(scan.nextLine()));
 		} else {
-			playerTwo = new Player(new Symbol('O'), new Name(scan.nextLine()));
+			playerTwo = new Player(SYMBOL_O, new Name(scan.nextLine()));
 		}
 
 	}
@@ -48,32 +51,30 @@ public class TicTacToeConsoleApp {
 		game = new SingleGame(playerOne, playerTwo, 5);
 		final BoardPrinter printer = new BoardPrinter(game.getSize());
 		GameResult latestResult;
-		Player nextPlayer;
 
-		if (playerOne.getSymbol().getValue() == 'O') {
-			nextPlayer = playerOne;
-		} else {
-			nextPlayer = playerTwo;
-		}
+		Player nextPlayer = setWhichPlayerMakesFirstMove();
 
 		do {
 			printer.printBoard(game.getBoardView());
 			System.out.println(nextPlayer.getName() + " (" + nextPlayer.getSymbol() + ") please enter coordinates (e.g. C2) with unoccupied place");
 			latestResult = makeMove(game, translator, nextPlayer);
-			nextPlayer = nextPlayer == playerTwo ? playerOne : playerTwo;
+			nextPlayer = getNextPlayer(nextPlayer);
 		} while (latestResult.getGameStatus().equals(GameStatus.IN_PROGRESS));
 
 		printer.printBoard(game.getBoardView());
 		printResultOfTheGame(latestResult);
 
-		System.out.println("Would you like to play again? (1 - yes, 2 - no)");
-		playAgain = getNumber(scan);
-		if (playAgain == 1) {
-			resetBoard(game.getBoardView());
-			run();
+		askIfPlayAgain();
+	}
+
+	private Player setWhichPlayerMakesFirstMove() {
+		Player nextPlayer;
+		if (playerOne.getSymbol().equals(SYMBOL_O)) {
+			nextPlayer = playerOne;
 		} else {
-			System.out.println("Thanks for playing");
+			nextPlayer = playerTwo;
 		}
+		return nextPlayer;
 	}
 
 	private GameResult makeMove(final SingleGame game, final FieldNumberTranslator translator, final Player nextPlayer) {
@@ -85,6 +86,21 @@ public class TicTacToeConsoleApp {
 		} catch (SpotAlreadyTakenOnBoardException exception) {
 			System.out.println("Spot is taken, choose different number");
 			return makeMove(game, translator, nextPlayer);
+		}
+	}
+
+	private Player getNextPlayer(final Player nextPlayer) {
+		return nextPlayer == playerTwo ? playerOne : playerTwo;
+	}
+
+	private void askIfPlayAgain() {
+		System.out.println("Would you like to play again? (1 - yes, 2 - no)");
+		playAgain = getNumber(scan);
+		if (playAgain == 1) {
+			resetBoard(game.getBoardView());
+			run();
+		} else {
+			System.out.println("Thanks for playing");
 		}
 	}
 

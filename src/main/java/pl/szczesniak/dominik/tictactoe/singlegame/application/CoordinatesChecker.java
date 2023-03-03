@@ -8,7 +8,8 @@ class CoordinatesChecker {
 		if (!Character.isLetter(line.charAt(0))
 				|| !Character.isDigit(getNumberCoordinate(line)) && getNumberCoordinate(line) > boardSize
 				|| getNumberCoordinate(line) > boardSize
-				|| !checkIsLetterCoordinateCorrect(getLetterCoordinate(line), boardSize)) {
+				|| !checkIsLetterCoordinateCorrect(getLetterCoordinate(line), boardSize)
+		) {
 			throw new WrongCoordinatesException();
 		}
 		return true;
