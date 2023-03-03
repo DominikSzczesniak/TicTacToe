@@ -1,17 +1,14 @@
 package pl.szczesniak.dominik.tictactoe.singlegame.application;
 
 import org.junit.jupiter.api.Test;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 class FieldNumberTranslatorTest {
 
     private FieldCoordinates coordinates;
 
-
-
     @Test
-    void should_return_0_and_0_coordinates_when_passed_a_1_as_an_argument() {
+    void should_return_0_and_0_indexes_when_passed_a1_and_length_3_as_arguments() {
         // given
        final FieldNumberTranslator tut = new FieldNumberTranslator();
 
@@ -24,7 +21,7 @@ class FieldNumberTranslatorTest {
     }
 
     @Test
-    void should_return_0_and_1_coordinates_when_passed_2_as_an_argument() {
+    void should_return_0_and_1_indexes_when_passed_a2_and_length_3_as_arguments() {
         // given
         final FieldNumberTranslator tut = new FieldNumberTranslator();
 
@@ -37,7 +34,7 @@ class FieldNumberTranslatorTest {
     }
 
     @Test
-    void should_return_0_and_2_coordinates_when_passed_3_as_an_argument() {
+    void should_return_0_and_2_indexes_when_passed_a3_and_length_3_as_arguments() {
         // given
         final FieldNumberTranslator tut = new FieldNumberTranslator();
 
@@ -50,7 +47,7 @@ class FieldNumberTranslatorTest {
     }
 
     @Test
-    void should_return_1_and_0_coordinates_when_passed_4_as_an_argument() {
+    void should_return_1_and_0_indexes_when_passed_b4_and_length_3_as_arguments() {
         // given
         final FieldNumberTranslator tut = new FieldNumberTranslator();
 
@@ -63,7 +60,7 @@ class FieldNumberTranslatorTest {
     }
 
     @Test
-    void should_return_1_and_1_coordinates_when_passed_5_as_an_argument() {
+    void should_return_1_and_1_indexes_when_passed_b5_and_length_3_as_arguments() {
         // given
         final FieldNumberTranslator tut = new FieldNumberTranslator();
 
@@ -76,7 +73,7 @@ class FieldNumberTranslatorTest {
     }
 
     @Test
-    void should_return_1_and_2_coordinates_when_passed_6_as_an_argument() {
+    void should_return_1_and_2_indexes_when_passed_b6_and_length_3_as_arguments() {
         // given
         final FieldNumberTranslator tut = new FieldNumberTranslator();
 
@@ -89,7 +86,7 @@ class FieldNumberTranslatorTest {
     }
 
     @Test
-    void should_return_2_and_0_coordinates_when_passed_7_as_an_argument() {
+    void should_return_2_and_0_indexes_when_passed_c7_and_length_3_as_arguments() {
         // given
         final FieldNumberTranslator tut = new FieldNumberTranslator();
 
@@ -102,7 +99,7 @@ class FieldNumberTranslatorTest {
     }
 
     @Test
-    void should_return_2_and_1_coordinates_when_passed_8_as_an_argument() {
+    void should_return_2_and_1_indexes_when_passed_c8_and_length_3_as_arguments() {
         // given
         final FieldNumberTranslator tut = new FieldNumberTranslator();
 
@@ -115,7 +112,7 @@ class FieldNumberTranslatorTest {
     }
 
     @Test
-    void should_return_2_and_2_coordinates_when_passed_9_as_an_argument() {
+    void should_return_2_and_0_indexes_when_passed_c9_and_length_4_as_arguments() {
         // given
         final FieldNumberTranslator tut = new FieldNumberTranslator();
 
@@ -127,14 +124,17 @@ class FieldNumberTranslatorTest {
         assertThat(coordinates.getColumn()).isEqualTo(0);
     }
 
-    
-//        assertThat(tut.toCoordinates(2)).isEqualTo(new FieldCoordinates(0, 1));
-//        assertThat(tut.toCoordinates(3)).isEqualTo(new FieldCoordinates(0, 2));
-//        assertThat(tut.toCoordinates(4)).isEqualTo(new FieldCoordinates(1, 0));
-//        assertThat(tut.toCoordinates(5)).isEqualTo(new FieldCoordinates(1, 1));
-//        assertThat(tut.toCoordinates(6)).isEqualTo(new FieldCoordinates(1, 2));
-//        assertThat(tut.toCoordinates(7)).isEqualTo(new FieldCoordinates(2, 0));
-//        assertThat(tut.toCoordinates(8)).isEqualTo(new FieldCoordinates(2, 1));
-//        assertThat(tut.toCoordinates(9)).isEqualTo(new FieldCoordinates(2, 2));
+    @Test
+    void should_return_3_and_3_indexes_when_passed_d19_and_length_5_as_arguments() {
+        // given
+        final FieldNumberTranslator tut = new FieldNumberTranslator();
+
+        // when
+        coordinates = tut.toCoordinates('d', 19, 5);
+
+        // then
+        assertThat(coordinates.getRow()).isEqualTo(3);
+        assertThat(coordinates.getColumn()).isEqualTo(3);
+    }
 
 }

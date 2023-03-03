@@ -2,7 +2,7 @@ package pl.szczesniak.dominik.tictactoe.singlegame.application;
 
 class FieldNumberTranslator {
 
-    FieldCoordinates toCoordinates(final char letter, final int number, final int length) {
+    FieldCoordinates toCoordinates(final char letter, final int number, final int boardLength) {
         int numberOfLetter = 0;
         int counter = 0;
         for (char alphabet = 'a'; alphabet <= 'z'; alphabet++) {
@@ -13,9 +13,10 @@ class FieldNumberTranslator {
             counter++;
         }
 
-        final int row = (numberOfLetter) % length;
-        final int column = (number - 1) % length;
+        final int row = (numberOfLetter) % boardLength;
+        final int column = (number - 1) % boardLength;
 
         return new FieldCoordinates(row, column);
     }
+
 }

@@ -3,31 +3,19 @@ package pl.szczesniak.dominik.tictactoe.singlegame.domain.model;
 import java.util.Objects;
 
 public class Symbol {
-    private final char value;
 
-    public Symbol(final char symbol) {
-        this.value = symbol;
-    }
+	private final char value;
 
-    public char getValue() {
-        return value;
-    }
+	public Symbol(final char symbol) {
+		this.value = symbol;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Symbol symbol1 = (Symbol) o;
-        return value == symbol1.value;
-    }
+	public char getValue() {
+		return value;
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(value);
-    }
-
-    @Override
-    public String toString() {
-        return "" + value;
-    }
+	@Override
+	public String toString() {
+		return "" + value;
+	}
 }

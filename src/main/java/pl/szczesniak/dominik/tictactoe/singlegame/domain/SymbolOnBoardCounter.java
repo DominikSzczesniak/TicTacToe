@@ -12,6 +12,11 @@ class SymbolOnBoardCounter {
 		this.board = board;
 	}
 
+	int countSymbolInSequence(final int rowIndex, final int columnIndex) {
+		return Math.max(countSymbolInSequenceHorizontally(rowIndex),
+				Math.max(maxCountSymbolInSequenceVertically(columnIndex), countSymbolInSequenceDiagonally(rowIndex, columnIndex)));
+	}
+
 	int countSymbolInSequenceHorizontally(final int rowIndex) {
 		int number = 0;
 		int secondNumber = 0;
@@ -36,7 +41,7 @@ class SymbolOnBoardCounter {
 		return secondNumber;
 	}
 
-	int maxCountSymbolInSequenceVertically(int columnIndex) {
+	int maxCountSymbolInSequenceVertically(final int columnIndex) {
 		int number = 0;
 		int secondNumber = 0;
 
@@ -60,7 +65,7 @@ class SymbolOnBoardCounter {
 		return secondNumber;
 	}
 
-	int countSymbolInSequenceDiagonally(int rowIndex, int columnIndex) {
+	int countSymbolInSequenceDiagonally(final int rowIndex, final int columnIndex) {
 		int cursor = 0;
 		int firstDiagonal = 0;
 		int secondDiagonal;

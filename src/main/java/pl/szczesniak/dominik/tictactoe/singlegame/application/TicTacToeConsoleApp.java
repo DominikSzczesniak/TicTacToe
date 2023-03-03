@@ -14,11 +14,13 @@ import java.util.Scanner;
 
 public class TicTacToeConsoleApp {
 
-	final Scanner scan = new Scanner(System.in);
+	private final FieldNumberTranslator translator = new FieldNumberTranslator();
+	private final CoordinatesChecker checker = new CoordinatesChecker();
+	private final Scanner scan = new Scanner(System.in);
+	private SingleGame game;
 	private final Player playerOne;
 	private final Player playerTwo;
 	private int playAgain;
-	private final FieldNumberTranslator translator = new FieldNumberTranslator();
 
 	public TicTacToeConsoleApp() {
 		System.out.println();
@@ -43,7 +45,7 @@ public class TicTacToeConsoleApp {
 	}
 
 	public void run() {
-		final SingleGame game = new SingleGame(playerOne, playerTwo, 5);
+		game = new SingleGame(playerOne, playerTwo, 5);
 		final BoardPrinter printer = new BoardPrinter(game.getSize());
 		GameResult latestResult;
 		Player nextPlayer;
@@ -74,14 +76,26 @@ public class TicTacToeConsoleApp {
 		}
 	}
 
-	private GameResult makeMove(SingleGame game, FieldNumberTranslator translator, Player nextPlayer) {
-		String line = getSpot();
-		final FieldCoordinates coordinates = translator.toCoordinates(getLetterCoordinate(line), getNumberCoordinate(line), game.getBoardView().length);
+	private GameResult makeMove(final SingleGame game, final FieldNumberTranslator translator, final Player nextPlayer) {
+		final String line = getSpot();
+		final FieldCoordinates coordinates = translator.toCoordinates(checker.getLetterCoordinate(line),
+				checker.getNumberCoordinate(line), game.getBoardView().length);
 		try {
 			return game.makeMove(nextPlayer, new PlayerMove(coordinates.getRow(), coordinates.getColumn()));
 		} catch (SpotAlreadyTakenOnBoardException exception) {
 			System.out.println("Spot is taken, choose different number");
 			return makeMove(game, translator, nextPlayer);
+		}
+	}
+
+	private String getSpot() {
+		final String coordinates = scan.nextLine();
+		try {
+			checker.areCorrectCoordinates(coordinates, game.getSize());
+			return coordinates;
+		} catch (WrongCoordinatesException exception) {
+			System.out.println("Type in correct coordinates (e.g. C1, A3, b2).");
+			return getSpot();
 		}
 	}
 
@@ -95,7 +109,11 @@ public class TicTacToeConsoleApp {
 		}
 	}
 
-	private void resetBoard(Character[][] board) {
+	private int getNumber(final Scanner scanner) {
+		return Integer.parseInt(scanner.nextLine());
+	}
+
+	private void resetBoard(final Character[][] board) {
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
 				board[i][j] = ' ';
@@ -103,37 +121,8 @@ public class TicTacToeConsoleApp {
 		}
 	}
 
-	private int getNumber(Scanner scanner) {
-		return Integer.parseInt(scanner.nextLine());
-	}
-
-	private String getSpot() {
-		String coordinates = scan.nextLine();
-		try {
-			isCorrectCoordinates(coordinates);
-			return coordinates;
-		} catch (WrongCoordinatesException exception) {
-			System.out.println("Type in correct coordinates (e.g. C1, A3, b2).");
-			return getSpot();
-		}
-	}
-
-	private char getLetterCoordinate(String line) {
-		return Character.toLowerCase(line.charAt(0));
-	}
-
-	private Integer getNumberCoordinate(String line) {
-		return Integer.parseInt(String.valueOf(line.charAt(1)));
-	}
-
-	private void isCorrectCoordinates(String line) {
-		if (!Character.isLetter(line.charAt(0)) || !Character.isDigit(line.charAt(1))) {
-			throw new WrongCoordinatesException();
-		}
-	}
-
-	private char getSymbol(Scanner scanner) {
-		String symbol = scanner.nextLine();
+	private char getSymbol(final Scanner scanner) {
+		final String symbol = scanner.nextLine();
 		return symbol.charAt(0);
 	}
 
