@@ -93,6 +93,16 @@ public class TicTacToeConsoleApp {
 		return nextPlayer == playerTwo ? playerOne : playerTwo;
 	}
 
+	private void printResultOfTheGame(final GameResult result) {
+		if (GameStatus.WIN.equals(result.getGameStatus())) {
+			System.out.println("Congratulations, " + result.getWhoWon() + " won the round.");
+		} else if (GameStatus.DRAW.equals(result.getGameStatus())) {
+			System.out.println("It's a draw.");
+		} else {
+			throw new IllegalArgumentException("Cannot printResultOfTheGame when game is in status:" + result.getGameStatus());
+		}
+	}
+
 	private void askIfPlayAgain() {
 		System.out.println("Would you like to play again? (1 - yes, 2 - no)");
 		playAgain = getNumber(scan);
@@ -115,18 +125,13 @@ public class TicTacToeConsoleApp {
 		}
 	}
 
-	private void printResultOfTheGame(final GameResult result) {
-		if (GameStatus.WIN.equals(result.getGameStatus())) {
-			System.out.println("Congratulations, " + result.getWhoWon() + " won the round.");
-		} else if (GameStatus.DRAW.equals(result.getGameStatus())) {
-			System.out.println("It's a draw.");
-		} else {
-			throw new IllegalArgumentException("Cannot printResultOfTheGame when game is in status:" + result.getGameStatus());
-		}
-	}
-
 	private int getNumber(final Scanner scanner) {
 		return Integer.parseInt(scanner.nextLine());
+	}
+
+	private char getSymbol(final Scanner scanner) {
+		final String symbol = scanner.nextLine();
+		return symbol.charAt(0);
 	}
 
 	private void resetBoard(final Character[][] board) {
@@ -135,11 +140,6 @@ public class TicTacToeConsoleApp {
 				board[i][j] = ' ';
 			}
 		}
-	}
-
-	private char getSymbol(final Scanner scanner) {
-		final String symbol = scanner.nextLine();
-		return symbol.charAt(0);
 	}
 
 }
