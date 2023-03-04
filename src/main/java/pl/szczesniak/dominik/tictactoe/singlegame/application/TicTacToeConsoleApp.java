@@ -1,5 +1,6 @@
 package pl.szczesniak.dominik.tictactoe.singlegame.application;
 
+import pl.szczesniak.dominik.tictactoe.singlegame.domain.GameHistoryHandler;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.SingleGame;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.exceptions.SpotAlreadyTakenOnBoardException;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.GameResult;
@@ -11,7 +12,8 @@ import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.Symbol;
 import java.util.Scanner;
 
 public class TicTacToeConsoleApp {
-	
+
+	GameHistoryHandler gameHistoryHandler = new GameHistoryHandler();
 	final Scanner scan = new Scanner(System.in);
 	private final Player playerOne;
 	private final Player playerTwo;
@@ -62,6 +64,7 @@ public class TicTacToeConsoleApp {
 
 		printer.printBoard(game.getBoardView());
 		printResultOfTheGame(latestResult);
+		gameHistoryHandler.saveWinner(latestResult.getWhoWon());
 
 		System.out.println("Would you like to play again? (1 - yes, 2 - no)");
 		playAgain = getNumber(scan);
