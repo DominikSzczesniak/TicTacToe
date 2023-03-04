@@ -11,7 +11,7 @@ import java.io.IOException;
 public class GameHistoryHandler {
 
 	public void saveWinner(Name player) {
-//		int playerWins = getWins(player);
+//		int playerWins = getPlayerWins(player);
 		int playerWins = 0;
 		try {
 			BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("Game history.txt "));
@@ -23,7 +23,7 @@ public class GameHistoryHandler {
 		}
 	}
 
-	public int getWins(Name player) {
+	public int getPlayerWins(Name player) {
 		int playerWins = 0;
 		try {
 			BufferedReader bufferedReader = new BufferedReader(new FileReader("Game history.txt"));
