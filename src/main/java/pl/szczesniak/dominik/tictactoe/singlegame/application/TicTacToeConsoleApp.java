@@ -1,5 +1,6 @@
 package pl.szczesniak.dominik.tictactoe.singlegame.application;
 
+import pl.szczesniak.dominik.tictactoe.singlegame.domain.GameWins;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.SingleGame;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.exceptions.SpotAlreadyTakenOnBoardException;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.exceptions.WrongCoordinatesException;
@@ -14,6 +15,7 @@ import java.util.Scanner;
 
 public class TicTacToeConsoleApp {
 
+	GameWins gameWins = new GameWins();
 	private final FieldNumberTranslator translator = new FieldNumberTranslator();
 	private final CoordinatesChecker checker = new CoordinatesChecker();
 	private final Scanner scan = new Scanner(System.in);
@@ -63,6 +65,7 @@ public class TicTacToeConsoleApp {
 
 		printer.printBoard(game.getBoardView());
 		printResultOfTheGame(latestResult);
+		gameWins.saveWinner(latestResult.getWhoWon());
 
 		askIfPlayAgain();
 	}
@@ -104,6 +107,16 @@ public class TicTacToeConsoleApp {
 		}
 	}
 
+	private void printResultOfTheGame(final GameResult result) {
+		if (GameStatus.WIN.equals(result.getGameStatus())) {
+			System.out.println("Congratulations, " + result.getWhoWon() + " won the round.");
+		} else if (GameStatus.DRAW.equals(result.getGameStatus())) {
+			System.out.println("It's a draw.");
+		} else {
+			throw new IllegalArgumentException("Cannot printResultOfTheGame when game is in status:" + result.getGameStatus());
+		}
+	}
+
 	private String getSpot() {
 		final String coordinates = scan.nextLine();
 		try {
@@ -115,18 +128,13 @@ public class TicTacToeConsoleApp {
 		}
 	}
 
-	private void printResultOfTheGame(final GameResult result) {
-		if (GameStatus.WIN.equals(result.getGameStatus())) {
-			System.out.println("Congratulations, " + result.getWhoWon() + " won the round.");
-		} else if (GameStatus.DRAW.equals(result.getGameStatus())) {
-			System.out.println("It's a draw.");
-		} else {
-			throw new IllegalArgumentException("Cannot printResultOfTheGame when game is in status:" + result.getGameStatus());
-		}
-	}
-
 	private int getNumber(final Scanner scanner) {
 		return Integer.parseInt(scanner.nextLine());
+	}
+
+	private char getSymbol(final Scanner scanner) {
+		final String symbol = scanner.nextLine();
+		return symbol.charAt(0);
 	}
 
 	private void resetBoard(final Character[][] board) {
@@ -135,11 +143,6 @@ public class TicTacToeConsoleApp {
 				board[i][j] = ' ';
 			}
 		}
-	}
-
-	private char getSymbol(final Scanner scanner) {
-		final String symbol = scanner.nextLine();
-		return symbol.charAt(0);
 	}
 
 }
