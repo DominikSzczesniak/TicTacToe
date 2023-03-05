@@ -1,6 +1,6 @@
 package pl.szczesniak.dominik.tictactoe;
 
-import pl.szczesniak.dominik.tictactoe.singlegame.application.TicTacToeConsoleApp;
+import pl.szczesniak.dominik.tictactoe.game.application.TicTacToeConsoleApp;
 
 public class TicTacToeConsoleLauncher {
 

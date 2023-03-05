@@ -1,6 +1,6 @@
 package pl.szczesniak.dominik.tictactoe.singlegame.domain;
 
-import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.Name;
+import pl.szczesniak.dominik.tictactoe.player.model.PlayerName;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class GameHistoryHandler {
 
-	public void saveWinner(Name player) {
+	public void saveWinner(PlayerName player) {
 //		int playerWins = getPlayerWins(player);
 		int playerWins = 0;
 		try {
@@ -23,7 +23,7 @@ public class GameHistoryHandler {
 		}
 	}
 
-	public int getPlayerWins(Name player) {
+	public int getPlayerWins(PlayerName player) {
 		int playerWins = 0;
 		try {
 			BufferedReader bufferedReader = new BufferedReader(new FileReader("Game history.txt"));

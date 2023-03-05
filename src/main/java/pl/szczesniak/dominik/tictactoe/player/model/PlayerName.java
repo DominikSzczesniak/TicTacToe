@@ -1,10 +1,10 @@
-package pl.szczesniak.dominik.tictactoe.singlegame.domain.model;
+package pl.szczesniak.dominik.tictactoe.player.model;
 
-public class Name {
+public class PlayerName {
 
 	private final String name;
 
-	public Name(final String name) {
+	public PlayerName(final String name) {
 		this.name = name;
 	}
 

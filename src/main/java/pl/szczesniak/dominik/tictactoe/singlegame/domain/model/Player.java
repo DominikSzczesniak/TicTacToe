@@ -1,11 +1,13 @@
 package pl.szczesniak.dominik.tictactoe.singlegame.domain.model;
 
+import pl.szczesniak.dominik.tictactoe.player.model.PlayerName;
+
 public class Player {
 
     private final Symbol symbol;
-    private final Name name;
+    private final PlayerName name;
 
-    public Player(final Symbol symbol, final Name name) {
+    public Player(final Symbol symbol, final PlayerName name) {
         this.symbol = symbol;
         this.name = name;
     }
@@ -14,7 +16,7 @@ public class Player {
         return symbol;
     }
 
-    public Name getName() {
+    public PlayerName getName() {
         return name;
     }
 

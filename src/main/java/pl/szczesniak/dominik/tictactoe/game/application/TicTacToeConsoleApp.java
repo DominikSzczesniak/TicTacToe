@@ -1,4 +1,4 @@
-package pl.szczesniak.dominik.tictactoe.singlegame.application;
+package pl.szczesniak.dominik.tictactoe.game.application;
 
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.GameHistoryHandler;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.SingleGame;
@@ -7,7 +7,7 @@ import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.GameResult;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.GameStatus;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.Player;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.PlayerMove;
-import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.Name;
+import pl.szczesniak.dominik.tictactoe.player.model.PlayerName;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.Symbol;
 import java.util.Scanner;
 
@@ -30,14 +30,14 @@ public class TicTacToeConsoleApp {
 		System.out.println("|The game consists of 2 players, each with a symbol - X or O, player with symbol O gets to move first.|");
 		System.out.println("-------------------------------------------------------------------------------------------------------");
 		System.out.println("Player 1, choose your name:");
-		Name nameOne = new Name(scan.nextLine());
+		PlayerName nameOne = new PlayerName(scan.nextLine());
 		System.out.println(nameOne.getName() + " choose your symbol, enter O or X");
 		playerOne = new Player(new Symbol(getSymbol(scan)), nameOne);
 		System.out.println("Player 2, choose your name");
 		if (playerOne.getSymbol().getValue() == 'O') {
-		playerTwo = new Player(new Symbol('X'), new Name(scan.nextLine()));
+		playerTwo = new Player(new Symbol('X'), new PlayerName(scan.nextLine()));
 		} else {
-		playerTwo = new Player(new Symbol('O'), new Name(scan.nextLine()));
+		playerTwo = new Player(new Symbol('O'), new PlayerName(scan.nextLine()));
 		}
 
 	}
