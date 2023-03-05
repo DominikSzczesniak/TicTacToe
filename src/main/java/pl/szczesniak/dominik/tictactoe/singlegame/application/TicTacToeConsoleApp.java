@@ -2,7 +2,6 @@ package pl.szczesniak.dominik.tictactoe.singlegame.application;
 
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.SingleGame;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.exceptions.SpotAlreadyTakenOnBoardException;
-import pl.szczesniak.dominik.tictactoe.singlegame.domain.exceptions.WrongCoordinatesException;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.GameResult;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.GameStatus;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.Player;
@@ -48,8 +47,9 @@ public class TicTacToeConsoleApp {
 	}
 
 	public void run() {
-		game = new SingleGame(playerOne, playerTwo, 5);
-		final BoardPrinter printer = new BoardPrinter(game.getSize());
+		int boardSize = 5; // TODO: let user choose
+		game = new SingleGame(playerOne, playerTwo, boardSize);
+		final BoardPrinter printer = new BoardPrinter(boardSize);
 		GameResult latestResult;
 
 		Player nextPlayer = setWhichPlayerMakesFirstMove();
@@ -117,7 +117,7 @@ public class TicTacToeConsoleApp {
 	private String getSpot() {
 		final String coordinates = scan.nextLine();
 		try {
-			checker.areCorrectCoordinates(coordinates, game.getSize());
+			checker.areCorrectCoordinates(coordinates, 5);//FIXME
 			return coordinates;
 		} catch (WrongCoordinatesException exception) {
 			System.out.println("Type in correct coordinates (e.g. C1, A3, b2).");

@@ -1,7 +1,5 @@
 package pl.szczesniak.dominik.tictactoe.singlegame.application;
 
-import pl.szczesniak.dominik.tictactoe.singlegame.domain.exceptions.WrongCoordinatesException;
-
 class CoordinatesChecker {
 
 	boolean areCorrectCoordinates(final String line, final int boardSize) {

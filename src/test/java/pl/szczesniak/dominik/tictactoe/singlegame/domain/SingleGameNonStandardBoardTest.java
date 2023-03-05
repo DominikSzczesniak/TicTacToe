@@ -23,6 +23,12 @@ class SingleGameNonStandardBoardTest {
 		playerTwo = new Player(new Symbol('X'), new Name("playerTwo"));
 	}
 
+	// TODO:
+//	dla tablicy 3x3 wymagane 3 pola do wygrania
+//	dla tablicy 4x4 wymagane 3 pola do wygrania
+//	dla tablicy 5x5 wymagane 4 pola do wygrania
+//	dla tablicy 6x6 wymagane 4 pola do wygrania ??
+
 	@Test
 	void game_should_be_won_by_player_one_4x4_v1() {
 		// given

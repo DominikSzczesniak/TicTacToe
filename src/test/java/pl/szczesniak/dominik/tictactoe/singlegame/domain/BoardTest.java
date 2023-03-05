@@ -17,9 +17,13 @@ class BoardTest {
 	}
 
 	@Test
-	void placing_a_symbol_should_change_array() {
+	void placing_symbols_should_change_array() {
 		// when
 		tut.placeSymbol('A', 1, 1);
+		tut.placeSymbol('B', 1, 2);
+		tut.placeSymbol('C', 1, 3);
+		tut.placeSymbol('A', 0, 1);
+		tut.placeSymbol('A', 2, 1);
 
 		// then
 		final Character[][] boardView = tut.getCurrentState();

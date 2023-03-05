@@ -5,7 +5,7 @@ import pl.szczesniak.dominik.tictactoe.singlegame.application.TicTacToeConsoleAp
 public class TicTacToeConsoleLauncher {
 
     public static void main(String[] args) {
-
         new TicTacToeConsoleApp().run();
     }
+
 }

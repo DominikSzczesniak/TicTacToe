@@ -1,7 +1,6 @@
 package pl.szczesniak.dominik.tictactoe.singlegame.application;
 
 import org.junit.jupiter.api.Test;
-import pl.szczesniak.dominik.tictactoe.singlegame.domain.exceptions.WrongCoordinatesException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -19,7 +18,7 @@ class CoordinatesCheckerTest {
 		assertThat(tut.areCorrectCoordinates("C3", 5)).isEqualTo(true);
 	}
 
-	@Test
+	@Test // Junit5 parametrised tests
 	void should_throw_exception_when_number_coordinate_is_bigger_than_board_size_1() {
 		// given
 		CoordinatesChecker tut = new CoordinatesChecker();
