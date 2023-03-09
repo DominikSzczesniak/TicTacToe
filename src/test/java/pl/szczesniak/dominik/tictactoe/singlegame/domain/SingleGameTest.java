@@ -9,7 +9,7 @@ import pl.szczesniak.dominik.tictactoe.singlegame.domain.exceptions.SizeNotSuppo
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.exceptions.SpotAlreadyTakenOnBoardException;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.exceptions.SymbolIsUnsupportedException;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.GameResult;
-import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.Name;
+import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.PlayerName;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.Player;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.PlayerMove;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.Symbol;
@@ -27,8 +27,8 @@ class SingleGameTest {
 
 	@BeforeEach
 	void setUp() {
-		playerOne = new Player(new Symbol('O'), new Name("playerOne"));
-		playerTwo = new Player(new Symbol('X'), new Name("playerTwo"));
+		playerOne = new Player(new Symbol('O'), new PlayerName("playerOne"));
+		playerTwo = new Player(new Symbol('X'), new PlayerName("playerTwo"));
 	}
 
 	@Test
@@ -126,7 +126,7 @@ class SingleGameTest {
 	@Test
 	void should_not_be_able_to_choose_invalid_symbol() {
 		// given
-		final Player playerThree = new Player(new Symbol('A'), new Name("Player"));
+		final Player playerThree = new Player(new Symbol('A'), new PlayerName("Player"));
 
 		// when
 		Throwable thrown = catchThrowable(() -> new SingleGame(playerOne, playerThree, 3));
@@ -159,7 +159,7 @@ class SingleGameTest {
 	void player_that_is_not_a_part_of_the_game_shouldnt_be_able_to_make_a_move() {
 		// given
 		final SingleGame tut = new SingleGame(playerOne, playerTwo, 3);
-		final Player player = new Player(new Symbol('X'), new Name("player"));
+		final Player player = new Player(new Symbol('X'), new PlayerName("player"));
 
 		// when
 		final Throwable thrown = catchThrowable(() -> tut.makeMove(player, new PlayerMove(1, 1)));

@@ -2,7 +2,7 @@ package pl.szczesniak.dominik.tictactoe.singlegame.domain;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.Name;
+import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.PlayerName;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.Player;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.PlayerMove;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.Symbol;
@@ -19,8 +19,8 @@ class SingleGameNonStandardBoardTest {
 
 	@BeforeEach
 	void setUp() {
-		playerOne = new Player(new Symbol('O'), new Name("playerOne"));
-		playerTwo = new Player(new Symbol('X'), new Name("playerTwo"));
+		playerOne = new Player(new Symbol('O'), new PlayerName("playerOne"));
+		playerTwo = new Player(new Symbol('X'), new PlayerName("playerTwo"));
 	}
 
 	// TODO:

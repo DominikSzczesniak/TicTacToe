@@ -20,7 +20,7 @@ public class GameResult {
 		return gameStatus;
 	}
 
-	public Name getWhoWon() {
+	public PlayerName getWhoWon() {
 		return whoWon.getName();
 	}
 }

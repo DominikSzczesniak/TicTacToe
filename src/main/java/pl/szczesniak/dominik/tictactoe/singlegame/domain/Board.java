@@ -4,12 +4,12 @@ class Board {
 
 	private final Character[][] currentState;
 	private final int rowsNumber;
-	private final int columnNumber;
+	private final int columnsNumber;
 
-	 Board(final int rowsNumber, final int columnNumber) {
+	 Board(final int rowsNumber, final int columnsNumber) {
 		this.rowsNumber = rowsNumber;
-		this.columnNumber = columnNumber;
-		currentState = new Character[rowsNumber][columnNumber];
+		this.columnsNumber = columnsNumber;
+		currentState = new Character[rowsNumber][columnsNumber];
 	}
 
 	void placeSymbol(final char symbol, final int rowIndex, final int columnIndex) {
@@ -38,8 +38,12 @@ class Board {
 		return rowsNumber;
 	}
 
-	int getColumnNumber() {
-		return columnNumber;
+	int getColumnsNumber() {
+		return columnsNumber;
+	}
+
+	int getSize() {
+		 return  rowsNumber;
 	}
 
 }

@@ -12,11 +12,19 @@ import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.Player;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.PlayerMove;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.Symbol;
 
+import java.util.Map;
 import java.util.Set;
 
 public class SingleGame {
 
     private static final Set<Symbol> SUPPORTED_SYMBOLS = Set.of(new Symbol('X'), new Symbol('O'));
+
+    Map<Integer, Integer> map = Map.of(
+            3, 3,
+            4, 3,
+            5, 4,
+            6, 4
+    );
 
     private final Board board;
     private final Player playerOne;
@@ -94,13 +102,13 @@ public class SingleGame {
 
     private boolean checkIfPlayerWon(final Player player, final PlayerMove move) {
         final SymbolOnBoardCounter counter = new SymbolOnBoardCounter(player.getSymbol(), getBoardView());
-        return counter.countSymbolInSequence(move.getRowIndex(), move.getColumnIndex()) >= 3;//FIXME make game more playable
+        return counter.countSymbolInSequence(move.getRowIndex(), move.getColumnIndex()) >= map.get(board.getSize());
     }
 
     private boolean isDraw() {
         final Character[][] drawArray = getBoardView();
         for (int i = 0; i < board.getRowsNumber(); i++) {
-            for (int k = 0; k < board.getColumnNumber(); k++) {
+            for (int k = 0; k < board.getColumnsNumber(); k++) {
                 if (drawArray[i][k] == null) {
                     return false;
                 }
