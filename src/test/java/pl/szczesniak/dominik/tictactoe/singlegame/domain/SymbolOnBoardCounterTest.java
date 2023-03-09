@@ -21,10 +21,10 @@ class SymbolOnBoardCounterTest {
 		);
 
 		// then
-		assertThat(tut.countSymbolInSequenceHorizontally(0)).isEqualTo(2);
-		assertThat(tut.countSymbolInSequenceHorizontally(1)).isEqualTo(1);
-		assertThat(tut.countSymbolInSequenceHorizontally(2)).isEqualTo(1);
-		assertThat(tut.countSymbolInSequenceHorizontally(3)).isEqualTo(2);
+		assertThat(tut.horizontally(0)).isEqualTo(2);
+		assertThat(tut.horizontally(1)).isEqualTo(1);
+		assertThat(tut.horizontally(2)).isEqualTo(1);
+		assertThat(tut.horizontally(3)).isEqualTo(2);
 	}
 
 	@Test
@@ -44,11 +44,11 @@ class SymbolOnBoardCounterTest {
 		);
 
 		// then
-		assertThat(tut.countSymbolInSequenceHorizontally(0)).isEqualTo(2);
-		assertThat(tut.countSymbolInSequenceHorizontally(1)).isEqualTo(1);
-		assertThat(tut.countSymbolInSequenceHorizontally(2)).isEqualTo(1);
-		assertThat(tut.countSymbolInSequenceHorizontally(3)).isEqualTo(2);
-		assertThat(tut.countSymbolInSequenceHorizontally(4)).isEqualTo(4);
+		assertThat(tut.horizontally(0)).isEqualTo(2);
+		assertThat(tut.horizontally(1)).isEqualTo(1);
+		assertThat(tut.horizontally(2)).isEqualTo(1);
+		assertThat(tut.horizontally(3)).isEqualTo(2);
+		assertThat(tut.horizontally(4)).isEqualTo(4);
 	}
 
 	@Test
@@ -120,10 +120,10 @@ class SymbolOnBoardCounterTest {
 		assertThat(tut.maxCountSymbolInSequenceVertically(2)).isEqualTo(1);
 		assertThat(tut.maxCountSymbolInSequenceVertically(3)).isEqualTo(2);
 
-		assertThat(tut.countSymbolInSequenceHorizontally(0)).isEqualTo(1);
-		assertThat(tut.countSymbolInSequenceHorizontally(1)).isEqualTo(1);
-		assertThat(tut.countSymbolInSequenceHorizontally(2)).isEqualTo(1);
-		assertThat(tut.countSymbolInSequenceHorizontally(3)).isEqualTo(1);
+		assertThat(tut.horizontally(0)).isEqualTo(1);
+		assertThat(tut.horizontally(1)).isEqualTo(1);
+		assertThat(tut.horizontally(2)).isEqualTo(1);
+		assertThat(tut.horizontally(3)).isEqualTo(1);
 
 		assertThat(tut.countSymbolInSequenceDiagonally(2, 0)).isEqualTo(0);
 		assertThat(tut.countSymbolInSequenceDiagonally(0, 1)).isEqualTo(1);

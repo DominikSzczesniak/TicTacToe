@@ -12,43 +12,66 @@ class SymbolOnBoardCounter {
 	private final Symbol symbol;
 	private final Character[][] board;
 
-	private static class Board {
-		private final Character[][] value;
-//		private final int rows;
-//		private final int columns;
+	SymbolOnBoardCounter(final Symbol symbol, final Character[][] board) {
+		this.symbol = symbol;
+		this.board = board;
+	}
 
-		private Board(final Character[][] value) {
+	private static class Boardx {
+		private final Character[][] value;
+
+		private Boardx(final Character[][] value) {
 			this.value = value;
 		}
 
-		Optional<Object> getField(int row, int column) {
+		Optional<Field> getField(int row, int column) {
 			if (row >= value.length) {
 				return empty();
 			}
 			if (column >= value.length) {
 				return empty();
 			}
-			return Optional.of(new Field(ofNullable(value[row][column])));
+			return Optional.of(new Field(Optional.ofNullable(value[row][column]).orElse(';')));
 		}
 	}
 
 	private static class Field {
 		char value;
 
-		public <Object> Field(final Optional<Object> field) {
-			field.ifPresent(object -> this.value = (char) object);
+		public Field(final char value) {
+			this.value = value;
 		}
 
 		Optional<Character> getValue() {
 			return Optional.of(value);
 		}
+
+		boolean matchesSymbol(char symbol) {
+			return getValue().isPresent() && getValue().get().equals(symbol);
+		}
 	}
 
-	SymbolOnBoardCounter(final Symbol symbol, final Character[][] board) {
-		this.symbol = symbol;
-		this.board = board;
-	}
 
+	int horizontally(final int rowIndex) {
+		int number = 0;
+		int secondNumber = 0;
+		int columnIndex = 0;
+		Boardx boardx = new Boardx(board);
+		do {
+			Optional<Field> field = boardx.getField(rowIndex, columnIndex);
+			if (field.isPresent() && field.get().matchesSymbol(symbol.getValue())) {
+				number++;
+				if (columnIndex == board.length - 1) {
+					secondNumber = Math.max(number, secondNumber);
+				}
+			} else {
+				secondNumber = Math.max(number, secondNumber);
+				number = 0;
+			}
+		} while (boardx.getField(rowIndex, columnIndex++).isPresent());
+
+		return secondNumber;
+	}
 
 	int countSymbolInSequence(final int rowIndex, final int columnIndex) {
 		return Math.max(countSymbolInSequenceHorizontally(rowIndex),
