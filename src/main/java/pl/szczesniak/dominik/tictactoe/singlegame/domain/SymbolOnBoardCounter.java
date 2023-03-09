@@ -24,39 +24,39 @@ class SymbolOnBoardCounter {
 	}
 
 	int countSymbolInSequenceHorizontally(final int rowIndex) {
-		int number = 0;
-		int secondNumber = 0;
+		int count = 0;
+		int finalCount = 0;
 
 		for (int columnIndex = 0; columnIndex < board.length; columnIndex++) {
 			if (isSymbol(rowIndex, columnIndex)) {
-				number++;
+				count++;
 				if (columnIndex == board.length - 1) {
-					secondNumber = Math.max(number, secondNumber);
+					finalCount = Math.max(count, finalCount);
 				}
 			} else {
-				secondNumber = Math.max(number, secondNumber);
-				number = 0;
+				finalCount = Math.max(count, finalCount);
+				count = 0;
 			}
 		}
-		return secondNumber;
+		return finalCount;
 	}
 
 	int maxCountSymbolInSequenceVertically(final int columnIndex) {
-		int number = 0;
-		int secondNumber = 0;
+		int count = 0;
+		int finalCount = 0;
 
 		for (int rowIndex = 0; rowIndex < board.length; rowIndex++) {
 			if (isSymbol(rowIndex, columnIndex)) {
-				number++;
+				count++;
 				if (rowIndex == board.length - 1) {
-					secondNumber = Math.max(number, secondNumber);
+					finalCount = Math.max(count, finalCount);
 				}
 			} else {
-				secondNumber = Math.max(number, secondNumber);
-				number = 0;
+				finalCount = Math.max(count, finalCount);
+				count = 0;
 			}
 		}
-		return secondNumber;
+		return finalCount;
 	}
 
 	int countSymbolInSequenceDiagonally(final int rowIndex, final int columnIndex) {
@@ -70,7 +70,7 @@ class SymbolOnBoardCounter {
 		return Math.max(firstDiagonal, secondDiagonal);
 	}
 
-	private int checkBotLeftToTopRightDiagonal(int rowIndex, int columnIndex, int number, int secondNumber) {
+	private int checkBotLeftToTopRightDiagonal(int rowIndex, int columnIndex, int counter, int finalCounter) {
 		while (rowIndex != board.length - 1 && columnIndex != 0) {
 			rowIndex++;
 			columnIndex--;
@@ -79,21 +79,21 @@ class SymbolOnBoardCounter {
 		for (; rowIndex >= 0; rowIndex--) {
 			if (columnIndex < board.length) {
 				if (isSymbol(rowIndex, columnIndex)) {
-					number++;
+					counter++;
 					if (rowIndex == 0) {
-						secondNumber = Math.max(number, secondNumber);
+						finalCounter = Math.max(counter, finalCounter);
 					}
 				} else {
-					secondNumber = Math.max(number, secondNumber);
-					number = 0;
+					finalCounter = Math.max(counter, finalCounter);
+					counter = 0;
 				}
 			}
 			columnIndex++;
 		}
-		return secondNumber;
+		return finalCounter;
 	}
 
-	private int checkTopLeftToBotRightDiagonal(int rowIndex, int columnIndex, int number, int secondNumber) {
+	private int checkTopLeftToBotRightDiagonal(int rowIndex, int columnIndex, int counter, int finalCounter) {
 		while (rowIndex != 0 && columnIndex != 0) {
 			rowIndex--;
 			columnIndex--;
@@ -102,18 +102,18 @@ class SymbolOnBoardCounter {
 		for (; rowIndex < board.length; rowIndex++) {
 			if (columnIndex < board.length) {
 				if (isSymbol(rowIndex, columnIndex)) {
-					number++;
+					counter++;
 					if (columnIndex == board.length - 1) {
-						secondNumber = Math.max(number, secondNumber);
+						finalCounter = Math.max(counter, finalCounter);
 					}
 				} else {
-					secondNumber = Math.max(number, secondNumber);
-					number = 0;
+					finalCounter = Math.max(counter, finalCounter);
+					counter = 0;
 				}
 			}
 			columnIndex++;
 		}
-		return secondNumber;
+		return finalCounter;
 	}
 
 	private boolean isSymbol(final int rowIndex, final int columnIndex) {
