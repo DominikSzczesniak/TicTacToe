@@ -12,6 +12,38 @@ class SymbolOnBoardCounter {
 	private final Symbol symbol;
 	private final Character[][] board;
 
+	private static class Board {
+		private final Character[][] value;
+//		private final int rows;
+//		private final int columns;
+
+		private Board(final Character[][] value) {
+			this.value = value;
+		}
+
+		Optional<Object> getField(int row, int column) {
+			if (row >= value.length) {
+				return empty();
+			}
+			if (column >= value.length) {
+				return empty();
+			}
+			return Optional.of(new Field(ofNullable(value[row][column])));
+		}
+	}
+
+	private static class Field {
+		char value;
+
+		public <Object> Field(final Optional<Object> field) {
+			field.ifPresent(object -> this.value = (char) object);
+		}
+
+		Optional<Character> getValue() {
+			return Optional.of(value);
+		}
+	}
+
 	SymbolOnBoardCounter(final Symbol symbol, final Character[][] board) {
 		this.symbol = symbol;
 		this.board = board;
