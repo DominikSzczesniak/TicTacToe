@@ -1,9 +1,7 @@
 package pl.szczesniak.dominik.tictactoe.singlegame.application;
 
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.exceptions.IncorrectPlayerNameException;
-import pl.szczesniak.dominik.tictactoe.singlegame.domain.exceptions.SpotAlreadyTakenOnBoardException;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.Player;
-import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.PlayerMove;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.PlayerName;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.Symbol;
 
@@ -48,7 +46,7 @@ public class TicTacToeConsoleApp {
 		try {
 			return new PlayerName(scanner.nextLine());
 		} catch (IncorrectPlayerNameException exception) {
-			System.out.println("wrong name");
+			System.out.println("Name can only contain letters and must be 1-25 characters long.");
 			return setPlayerName(scanner);
 		}
 	}

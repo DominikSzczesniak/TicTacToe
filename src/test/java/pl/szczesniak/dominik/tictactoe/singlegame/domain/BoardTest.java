@@ -27,9 +27,9 @@ class BoardTest {
 
 		// then
 		final Character[][] boardView = tut.getCurrentState();
-		assertThat(boardView[0]).containsExactly(null, null, null, null, null);
-		assertThat(boardView[1]).containsExactly(null, 'A', null, null, null);
-		assertThat(boardView[2]).containsExactly(null, null, null, null, null);
+		assertThat(boardView[0]).containsExactly(null, 'A', null, null, null);
+		assertThat(boardView[1]).containsExactly(null, 'A', 'B', 'C', null);
+		assertThat(boardView[2]).containsExactly(null, 'A', null, null, null);
 		assertThat(boardView[3]).containsExactly(null, null, null, null, null);
 		assertThat(boardView[4]).containsExactly(null, null, null, null, null);
 	}

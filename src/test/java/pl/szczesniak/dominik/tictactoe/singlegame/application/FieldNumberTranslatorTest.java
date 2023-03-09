@@ -3,7 +3,7 @@ package pl.szczesniak.dominik.tictactoe.singlegame.application;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class FieldNumberTranslatorTest {
+class FieldNumberTranslatorTest {  // FIXME
 
     private FieldCoordinates coordinates;
 
@@ -52,7 +52,7 @@ class FieldNumberTranslatorTest {
         final FieldNumberTranslator tut = new FieldNumberTranslator();
 
         // when
-        coordinates = tut.toCoordinates('b', 4,3);
+        coordinates = tut.toCoordinates('b', 1,3);
 
         // then
         assertThat(coordinates.getRow()).isEqualTo(1);
@@ -65,7 +65,7 @@ class FieldNumberTranslatorTest {
         final FieldNumberTranslator tut = new FieldNumberTranslator();
 
         // when
-        coordinates = tut.toCoordinates('b', 5,3);
+        coordinates = tut.toCoordinates('b', 2,3);
 
         // then
         assertThat(coordinates.getRow()).isEqualTo(1);
@@ -78,7 +78,7 @@ class FieldNumberTranslatorTest {
         final FieldNumberTranslator tut = new FieldNumberTranslator();
 
         // when
-        coordinates = tut.toCoordinates('b', 6,3);
+        coordinates = tut.toCoordinates('b', 3,3);
 
         // then
         assertThat(coordinates.getRow()).isEqualTo(1);
@@ -86,12 +86,12 @@ class FieldNumberTranslatorTest {
     }
 
     @Test
-    void should_return_2_and_0_indexes_when_passed_c7_and_length_3_as_arguments() {
+    void should_return_2_and_0_indexes_when_passed_c1_and_length_3_as_arguments() {
         // given
         final FieldNumberTranslator tut = new FieldNumberTranslator();
 
         // when
-        coordinates = tut.toCoordinates('c', 7,3);
+        coordinates = tut.toCoordinates('c', 1,3);
 
         // then
         assertThat(coordinates.getRow()).isEqualTo(2);
@@ -104,7 +104,7 @@ class FieldNumberTranslatorTest {
         final FieldNumberTranslator tut = new FieldNumberTranslator();
 
         // when
-        coordinates = tut.toCoordinates('c', 8,3);
+        coordinates = tut.toCoordinates('c', 2,3);
 
         // then
         assertThat(coordinates.getRow()).isEqualTo(2);
@@ -117,7 +117,7 @@ class FieldNumberTranslatorTest {
         final FieldNumberTranslator tut = new FieldNumberTranslator();
 
         // when
-        coordinates = tut.toCoordinates('c', 9, 4);
+        coordinates = tut.toCoordinates('c', 1, 4);
 
         // then
         assertThat(coordinates.getRow()).isEqualTo(2);
@@ -130,7 +130,7 @@ class FieldNumberTranslatorTest {
         final FieldNumberTranslator tut = new FieldNumberTranslator();
 
         // when
-        coordinates = tut.toCoordinates('d', 19, 5);
+        coordinates = tut.toCoordinates('d', 4, 5);
 
         // then
         assertThat(coordinates.getRow()).isEqualTo(3);

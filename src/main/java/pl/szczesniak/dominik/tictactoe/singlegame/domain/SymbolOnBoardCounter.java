@@ -12,41 +12,6 @@ class SymbolOnBoardCounter {
 	private final Symbol symbol;
 	private final Character[][] board;
 
-
-//	private static class Board {
-//		private final Character[][] value;
-//		private final int rows;
-//		private final int columns;
-//
-//		private Board(final Character[][] value) {
-//			this.value = value;
-//		}
-//
-//		Optional<Object> getField(int row, int column) {
-//			if (row >= rows) {
-//				return empty();
-//			}
-//			if (column >= columns) {
-//				return empty();
-//			}
-//			return new Field(ofNullable(value[row][column]));
-//		}
-//
-//	}
-//
-//	private static class Field {
-//		char value;
-//
-//		public <T> Field(final Optional<T> t) {
-//
-//		}
-//
-//
-//		Optional<Character> getValue() {
-//			return ofNullable(value);
-//		}
-//	}
-
 	SymbolOnBoardCounter(final Symbol symbol, final Character[][] board) {
 		this.symbol = symbol;
 		this.board = board;
