@@ -24,7 +24,7 @@ class SymbolOnBoardCounter {
 			this.value = value;
 		}
 
-		Optional<Field> getField(int row, int column) {
+		Optional<Field> getField(final int row, final int column) {
 			if (row >= value.length) {
 				return empty();
 			}
@@ -36,7 +36,7 @@ class SymbolOnBoardCounter {
 	}
 
 	private static class Field {
-		char value;
+		final private char value;
 
 		public Field(final char value) {
 			this.value = value;
