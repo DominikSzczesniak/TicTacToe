@@ -16,4 +16,5 @@ public class PlayerName {
 	public String toString() {
 		return name;
 	}
+
 }

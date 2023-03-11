@@ -1,19 +1,22 @@
 package pl.szczesniak.dominik.tictactoe.game.application;
 
-import pl.szczesniak.dominik.tictactoe.singlegame.domain.GameHistoryHandler;
+import pl.szczesniak.dominik.tictactoe.gamehistory.adapter.OverwritingFileGameHistoryStorage;
+import pl.szczesniak.dominik.tictactoe.gamehistory.domain.GameHistoryService;
+import pl.szczesniak.dominik.tictactoe.gamehistory.domain.SingleGameResult;
+import pl.szczesniak.dominik.tictactoe.player.model.PlayerName;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.SingleGame;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.exceptions.SpotAlreadyTakenOnBoardException;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.GameResult;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.GameStatus;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.Player;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.PlayerMove;
-import pl.szczesniak.dominik.tictactoe.player.model.PlayerName;
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.Symbol;
+
 import java.util.Scanner;
 
 public class TicTacToeConsoleApp {
 
-	GameHistoryHandler gameHistoryHandler = new GameHistoryHandler();
+	private final GameHistoryService gameHistoryService = new GameHistoryService(new OverwritingFileGameHistoryStorage());
 	final Scanner scan = new Scanner(System.in);
 	private final Player playerOne;
 	private final Player playerTwo;
@@ -64,7 +67,9 @@ public class TicTacToeConsoleApp {
 
 		printer.printBoard(game.getBoardView());
 		printResultOfTheGame(latestResult);
-		gameHistoryHandler.saveWinner(latestResult.getWhoWon());
+		SingleGameResult singleGameResult = new SingleGameResult(latestResult.getWhoWon());
+		gameHistoryService.store(singleGameResult);
+		System.out.println("Number of " + latestResult.getWhoWon() + "'s wins: " + gameHistoryService.loadPlayerScore(latestResult.getWhoWon()).getValue());
 
 		System.out.println("Would you like to play again? (1 - yes, 2 - no)");
 		playAgain = getNumber(scan);
