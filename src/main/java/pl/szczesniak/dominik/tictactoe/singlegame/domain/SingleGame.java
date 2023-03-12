@@ -19,7 +19,7 @@ public class SingleGame {
 
     private static final Set<Symbol> SUPPORTED_SYMBOLS = Set.of(new Symbol('X'), new Symbol('O'));
 
-    Map<Integer, Integer> map = Map.of(
+    private static final Map<Integer, Integer> boardSizeToRequiredSymbolsToWin = Map.of(
             3, 3,
             4, 3,
             5, 4,
@@ -102,7 +102,7 @@ public class SingleGame {
 
     private boolean checkIfPlayerWon(final Player player, final PlayerMove move) {
         final SymbolOnBoardCounter counter = new SymbolOnBoardCounter(player.getSymbol(), getBoardView());
-        return counter.countSymbolInSequence(move.getRowIndex(), move.getColumnIndex()) >= map.get(board.getSize());
+        return counter.countSymbolInSequence(move.getRowIndex(), move.getColumnIndex()) >= boardSizeToRequiredSymbolsToWin.get(board.getSize());
     }
 
     private boolean isDraw() {

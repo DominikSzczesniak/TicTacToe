@@ -11,8 +11,7 @@ import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.Symbol;
 import java.util.Scanner;
 
 class TicTacToeGame {
-	private final FieldNumberTranslator translator = new FieldNumberTranslator();
-	//	private final CoordinatesChecker checker = new CoordinatesChecker();
+	private final FieldCoordinatesTranslator translator = new FieldCoordinatesTranslator();
 	private final Scanner scan = new Scanner(System.in);
 	private SingleGame game;
 	private final Player playerOne;
@@ -56,7 +55,7 @@ class TicTacToeGame {
 		return nextPlayer;
 	}
 
-	private GameResult placeSymbol(final SingleGame game, final FieldNumberTranslator translator, final Player nextPlayer) {
+	private GameResult placeSymbol(final SingleGame game, final FieldCoordinatesTranslator translator, final Player nextPlayer) {
 		final FieldCoordinates coordinates = getFieldCoordinates(game, translator);
 		try {
 			return game.makeMove(nextPlayer, new PlayerMove(coordinates.getRow(), coordinates.getColumn()));
@@ -66,11 +65,10 @@ class TicTacToeGame {
 		}
 	}
 
-	private FieldCoordinates getFieldCoordinates(final SingleGame game, final FieldNumberTranslator translator) {
+	private FieldCoordinates getFieldCoordinates(final SingleGame game, final FieldCoordinatesTranslator translator) {
 		try {
 			final String line = getSpot();
-			return translator.toCoordinates(translator.getLetterCoordinate(line),
-					translator.getNumberCoordinate(line), game.getBoardView().length);
+			return translator.toCoordinates(line, boardSize);
 		} catch (WrongCoordinatesException e) {
 			System.out.println("Choose valid coordinates.");
 			return getFieldCoordinates(game, translator);
