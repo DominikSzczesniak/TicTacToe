@@ -6,10 +6,14 @@ public class Player {
 
 	private final Symbol symbol;
 	private final PlayerName playerName;
+	private final int playerID;
 
 	public Player(final Symbol symbol, final PlayerName playerName) {
 		this.symbol = symbol;
 		this.playerName = playerName;
+
+		IdSetter idSetter = new IdSetter();
+		playerID = idSetter.getPlayerId(playerName);
 	}
 
 	public Symbol getSymbol() {
@@ -18,6 +22,10 @@ public class Player {
 
 	public PlayerName getName() {
 		return playerName;
+	}
+
+	int getPlayerID() {
+		return playerID;
 	}
 
 	@Override
