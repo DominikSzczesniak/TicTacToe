@@ -24,11 +24,9 @@ public class OverwritingFileGameHistoryStorage implements GameHistoryStorage {
 			while ((line = br.readLine()) != null) {
 				if (line.equals(singleGameResult.getValue().getName())) {
 					br.readLine();
-					buffer.append(line);
-					buffer.append('\n');
+					buffer.append(line + "\n");
 					line = String.valueOf(playerWins + 1);
-					buffer.append(line);
-					buffer.append('\n');
+					buffer.append(line + "\n");
 				}  else {
 					buffer.append(line);
 					buffer.append('\n');
