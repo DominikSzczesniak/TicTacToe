@@ -23,10 +23,8 @@ public class IdSetter implements PlayerID {
 		try {
 			FileWriter fw = new FileWriter("player_id_file.txt", true);
 			BufferedWriter bw = new BufferedWriter(fw);
-			bw.newLine();
-			bw.write(playerName.getValue());
-			bw.newLine();
-			bw.write(String.valueOf(id));
+			bw.write(playerName.getValue() + "\n");
+			bw.write(id + "\n");
 			bw.close();
 		} catch (IOException e) {
 			throw new RuntimeException(e);
@@ -77,9 +75,9 @@ public class IdSetter implements PlayerID {
 					id = Integer.parseInt(lastLine) + 1;
 				}
 			}
-			return id;
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+		return id;
 	}
 }
