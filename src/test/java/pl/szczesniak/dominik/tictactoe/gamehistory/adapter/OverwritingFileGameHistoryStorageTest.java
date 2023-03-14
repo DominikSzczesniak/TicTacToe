@@ -7,25 +7,20 @@ import pl.szczesniak.dominik.tictactoe.gamehistory.domain.SingleGameResult;
 import pl.szczesniak.dominik.tictactoe.player.model.PlayerName;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.util.Arrays;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertLinesMatch;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class OverwritingFileGameHistoryStorageTest {
 
 	private final String testFileName = "testFileName.txt";
+	@TempDir
+	File testFile = new File(testFileName);
 	OverwritingFileGameHistoryStorage tut;
 
 
 	@BeforeEach
 	void setUp() {
-		tut = new OverwritingFileGameHistoryStorage(testFileName);
+		tut = new OverwritingFileGameHistoryStorage(testFile.getName());
 	}
 
 	@Test
@@ -40,12 +35,13 @@ class OverwritingFileGameHistoryStorageTest {
 	@Test
 	void write_store() {
 		// given
-
+		final File expected = new File("testing.txt");
 		// when
-//		tut.store();
+		tut.store(new SingleGameResult(new PlayerName("Kamil")));
+		tut.store(new SingleGameResult(new PlayerName("Patryk")));
 
 		// then
-		// co jest w pliku
+		assertThat(testFile.isFile()).isEqualTo(true);
 	}
 
 	@Test

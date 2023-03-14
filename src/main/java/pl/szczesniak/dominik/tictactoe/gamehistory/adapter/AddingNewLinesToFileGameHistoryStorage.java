@@ -7,26 +7,23 @@ import pl.szczesniak.dominik.tictactoe.player.model.PlayerScore;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class OverwritingFileGameHistoryStorage implements GameHistoryStorage {
+public class AddingNewLinesToFileGameHistoryStorage implements GameHistoryStorage {
 
 	private final String fileName;
 
-	public OverwritingFileGameHistoryStorage(final String fileName) {
+	public AddingNewLinesToFileGameHistoryStorage(final String fileName) {
 		this.fileName = fileName;
 	}
 
 	@Override
-	public void store(SingleGameResult singleGameResult) {
+	public void store(final SingleGameResult singleGameResult) {
 		createFile();
 		int playerWins = loadPlayerScore(singleGameResult.getValue()).getValue();
-
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(fileName));
-			StringBuffer buffer = new StringBuffer();
 			String line;
 			while ((line = br.readLine()) != null) {
 				if (line.equals(singleGameResult.getValue().getName())) {
@@ -34,25 +31,11 @@ public class OverwritingFileGameHistoryStorage implements GameHistoryStorage {
 					buffer.append(line + "\n");
 					line = String.valueOf(playerWins + 1);
 					buffer.append(line + "\n");
-				} else {
-					buffer.append(line);
-					buffer.append('\n');
 				}
 			}
-			if (!playerIsInFile(singleGameResult.getValue())) {
-				buffer.append(singleGameResult.getValue().getName() + "\n");
-				buffer.append(1 + "\n");
-			}
-			br.close();
-
-			FileOutputStream fileOut = new FileOutputStream(fileName);
-			fileOut.write(buffer.toString().getBytes());
-			fileOut.close();
-
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
-
 	}
 
 	@Override
@@ -64,7 +47,6 @@ public class OverwritingFileGameHistoryStorage implements GameHistoryStorage {
 			while ((line = br.readLine()) != null) {
 				if (line.equals(playerName.getName())) {
 					wins = Integer.parseInt(br.readLine());
-					break;
 				}
 			}
 		} catch (IOException e) {
@@ -85,20 +67,5 @@ public class OverwritingFileGameHistoryStorage implements GameHistoryStorage {
 			e.printStackTrace();
 		}
 	}
-
-	private boolean playerIsInFile(final PlayerName playerName) {
-		try {
-			BufferedReader br = new BufferedReader(new FileReader(fileName));
-			String line;
-			while ((line = br.readLine()) != null) {
-				if (line.equals(playerName.getName())) {
-					return true;
-				}
-			}
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-		return false;
-	}
-
+}
 }
