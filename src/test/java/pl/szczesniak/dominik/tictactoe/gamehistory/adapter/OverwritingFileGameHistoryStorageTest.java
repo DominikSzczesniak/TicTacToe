@@ -3,6 +3,7 @@ package pl.szczesniak.dominik.tictactoe.gamehistory.adapter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import pl.szczesniak.dominik.tictactoe.gamehistory.domain.SingleGameResult;
 import pl.szczesniak.dominik.tictactoe.player.model.PlayerName;
 
 import java.io.File;
@@ -18,30 +19,45 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class OverwritingFileGameHistoryStorageTest {
 
+	private final String testFileName = "testFileName.txt";
 	OverwritingFileGameHistoryStorage tut;
+
 
 	@BeforeEach
 	void setUp() {
-		tut = new OverwritingFileGameHistoryStorage();
+		tut = new OverwritingFileGameHistoryStorage(testFileName);
 	}
-
-	@TempDir
-	File sharedTempDir;
 
 	@Test
-	void fileTest() throws IOException {  // dodac plik jako argument do metody?????
-		// given
-		File data = new File(sharedTempDir, "letters.txt");
-		List<String> lines = Arrays.asList("Dominik", "5", "Patryk", "7");
-		PlayerName playerName = new PlayerName("Dominik");
-
+	void should_store_and_load() {
 		// when
-		Files.write(data.toPath(), lines);
+		tut.store(new SingleGameResult(new PlayerName("Kamil")));
 
 		// then
-		assertAll(
-				() -> assertTrue(Files.exists(data.toPath()), "File should exist"),
-				() -> assertLinesMatch(lines, Files.readAllLines(data.toPath())));
-		assertThat(tut.loadPlayerScore(playerName).getValue()).isEqualTo(5);
+		assertThat(tut.loadPlayerScore(new PlayerName("Kamil")).getValue()).isEqualTo(1);
 	}
+
+	@Test
+	void write_store() {
+		// given
+
+		// when
+//		tut.store();
+
+		// then
+		// co jest w pliku
+	}
+
+	@Test
+	void read_load() {
+		// given
+		// files.write(testfile)
+
+		// when
+		//tut.loadPlayerScore()
+
+		// then
+		//expect
+	}
+
 }

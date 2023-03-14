@@ -12,12 +12,18 @@ import java.io.IOException;
 
 public class OverwritingFileGameHistoryStorage implements GameHistoryStorage {
 
+	private final String fileName;
+
+	public OverwritingFileGameHistoryStorage(final String fileName) {
+		this.fileName = fileName;
+	}
+
 	@Override
 	public void store(SingleGameResult singleGameResult) {
 		int playerWins = loadPlayerScore(singleGameResult.getValue()).getValue();
 
 		try {
-			BufferedReader br = new BufferedReader(new FileReader("Game history.txt"));
+			BufferedReader br = new BufferedReader(new FileReader(fileName));
 			StringBuffer buffer = new StringBuffer();
 			String line;
 
@@ -34,7 +40,7 @@ public class OverwritingFileGameHistoryStorage implements GameHistoryStorage {
 			}
 			br.close();
 
-			FileOutputStream fileOut = new FileOutputStream("Game history.txt");
+			FileOutputStream fileOut = new FileOutputStream(fileName);
 			fileOut.write(buffer.toString().getBytes());
 			fileOut.close();
 
@@ -48,7 +54,7 @@ public class OverwritingFileGameHistoryStorage implements GameHistoryStorage {
 	public PlayerScore loadPlayerScore(final PlayerName playerName) {
 		int wins = 0;
 		try {
-			BufferedReader br = new BufferedReader(new FileReader("Game history.txt"));
+			BufferedReader br = new BufferedReader(new FileReader(fileName));
 			String line;
 			while ((line = br.readLine()) != null) {
 				if (line.equals(playerName.getName())) {

@@ -16,7 +16,7 @@ import java.util.Scanner;
 
 public class TicTacToeConsoleApp {
 
-	private final GameHistoryService gameHistoryService = new GameHistoryService(new OverwritingFileGameHistoryStorage());
+	private final GameHistoryService gameHistoryService = new GameHistoryService(new OverwritingFileGameHistoryStorage("Game_history.txt"));
 	final Scanner scan = new Scanner(System.in);
 	private final Player playerOne;
 	private final Player playerTwo;
