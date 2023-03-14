@@ -6,6 +6,7 @@ import pl.szczesniak.dominik.tictactoe.player.model.PlayerName;
 import pl.szczesniak.dominik.tictactoe.player.model.PlayerScore;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
@@ -20,6 +21,7 @@ public class OverwritingFileGameHistoryStorage implements GameHistoryStorage {
 
 	@Override
 	public void store(SingleGameResult singleGameResult) {
+		createFile();
 		int playerWins = loadPlayerScore(singleGameResult.getValue()).getValue();
 
 		try {
@@ -67,5 +69,17 @@ public class OverwritingFileGameHistoryStorage implements GameHistoryStorage {
 		}
 
 		return new PlayerScore(wins);
+	}
+
+	private void createFile() {
+		try {
+			File myObj = new File(fileName);
+			if (myObj.createNewFile()) {
+				System.out.println("File created: " + myObj.getName());
+			}
+		} catch (IOException e) {
+			System.out.println("An error occurred.");
+			e.printStackTrace();
+		}
 	}
 }
