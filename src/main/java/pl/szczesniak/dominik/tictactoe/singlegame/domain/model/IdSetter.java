@@ -2,6 +2,7 @@ package pl.szczesniak.dominik.tictactoe.singlegame.domain.model;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -10,12 +11,25 @@ public class IdSetter implements PlayerID {
 
 	@Override
 	public int getPlayerId(PlayerName playerName) {
+		createFile();
 		if (!playerHasId(playerName)) {
 			final int id = getNewId();
 			addId(playerName, id);
 			return id;
 		} else {
 			return getExistingPlayerId(playerName);
+		}
+	}
+
+	private static void createFile() {
+		try {
+			File myObj = new File("player_id_file.txt");
+			if (myObj.createNewFile()) {
+				System.out.println("File created: " + myObj.getName());
+			}
+		} catch (IOException e) {
+			System.out.println("An error occurred.");
+			e.printStackTrace();
 		}
 	}
 
