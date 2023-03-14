@@ -103,4 +103,18 @@ public class OverwritingFileGameHistoryStorage implements GameHistoryStorage {
 		return false;
 	}
 
+	public void deleteFile() {
+		try {
+			File fileToDelete = new File(fileName);
+			if (fileToDelete.delete()) {
+				System.out.println("File deleted: " + fileToDelete.getName());
+			} else {
+				System.out.println("Failed to delete the file.");
+			}
+		} catch (Exception e) {
+			System.out.println("An error occurred.");
+			e.printStackTrace();
+		}
+	}
+
 }

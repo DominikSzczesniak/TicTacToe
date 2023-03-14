@@ -1,7 +1,5 @@
 package pl.szczesniak.dominik.tictactoe.gamehistory.adapter;
 
-import org.apache.commons.io.FileUtils;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -12,11 +10,10 @@ import java.io.File;
 import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.AssertionsForClassTypes.linesOf;
 
 class OverwritingFileGameHistoryStorageTest {
 
-	private final String testFileName = "testFileName.txt";
 //	OverwritingFileGameHistoryStorage tut;
 
 	@TempDir
@@ -43,15 +40,23 @@ class OverwritingFileGameHistoryStorageTest {
 	void write_store() throws IOException {
 		// given
 		OverwritingFileGameHistoryStorage tut = new OverwritingFileGameHistoryStorage(testFile.getName());
-		final File expected = new File("testing.txt");
+//		tut.deleteFile();
+		final File testing = new File("testing.txt");
 
 		// when
 		tut.store(new SingleGameResult(new PlayerName("Kamil")));
 		tut.store(new SingleGameResult(new PlayerName("Patryk")));
 
 		// then
-//		assertThat(testFile).hasSameTextualContentAs(expected);
-		assertTrue(FileUtils.contentEquals(testFile, expected), "The files differ!");
+//		assertTrue(FileUtils.contentEquals(new File(testFile.getName()), testing), "The files differ!");
+		assertThat(linesOf(new File(testFile.getName()))).containsExactly(
+				"Kamil",
+				"1",
+				"Patryk",
+				"1"
+		);
+//		assertThat(testFile.renameTo(new File("gowno"))).(expected);
+//		assertTrue(FileUtils.contentEquals(testFile, expected), "The files differ!");
 	}
 
 	@Test
