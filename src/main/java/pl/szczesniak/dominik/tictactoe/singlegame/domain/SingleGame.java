@@ -33,7 +33,7 @@ public class SingleGame {
     private Player latestMoveByPlayer;
     private boolean gameOver;
 
-    public SingleGame(final Player playerOne, final Player playerTwo, final int boardSize) { // FIXME: -> VO BoardSize 3;6
+    public SingleGame(final Player playerOne, final Player playerTwo, final int boardSize) {
         if (SUPPORTED_SYMBOLS.stream().noneMatch(marker -> marker.getValue() == playerOne.getSymbol().getValue())) {
             throw new SymbolIsUnsupportedException("Symbol " + playerOne.getSymbol().getValue() + " is unsupported.");
         }
