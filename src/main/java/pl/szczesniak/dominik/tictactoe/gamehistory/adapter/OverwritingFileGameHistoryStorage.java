@@ -92,9 +92,11 @@ public class OverwritingFileGameHistoryStorage implements GameHistoryStorage {
 			String line;
 			while ((line = br.readLine()) != null) {
 				if (line.equals(playerName.getName())) {
+					br.close();
 					return true;
 				}
 			}
+			br.close();
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}

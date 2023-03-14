@@ -1,5 +1,7 @@
 package pl.szczesniak.dominik.tictactoe.game.application;
 
+import pl.szczesniak.dominik.tictactoe.gamehistory.adapter.AddingNewLinesToFileGameHistoryStorage;
+import pl.szczesniak.dominik.tictactoe.gamehistory.adapter.FilePerPlayerGameHistoryStorage;
 import pl.szczesniak.dominik.tictactoe.gamehistory.adapter.OverwritingFileGameHistoryStorage;
 import pl.szczesniak.dominik.tictactoe.gamehistory.domain.GameHistoryService;
 import pl.szczesniak.dominik.tictactoe.gamehistory.domain.SingleGameResult;
@@ -16,7 +18,7 @@ import java.util.Scanner;
 
 public class TicTacToeConsoleApp {
 
-	private final GameHistoryService gameHistoryService = new GameHistoryService(new OverwritingFileGameHistoryStorage("Game_history.txt"));
+	private final GameHistoryService gameHistoryService = new GameHistoryService(new FilePerPlayerGameHistoryStorage());
 	final Scanner scan = new Scanner(System.in);
 	private final Player playerOne;
 	private final Player playerTwo;
