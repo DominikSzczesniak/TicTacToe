@@ -1,6 +1,5 @@
 package pl.szczesniak.dominik.tictactoe.gamehistory.adapter;
 
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import pl.szczesniak.dominik.tictactoe.gamehistory.domain.SingleGameResult;
@@ -14,12 +13,12 @@ import static org.assertj.core.api.AssertionsForClassTypes.linesOf;
 class OverwritingFileGameHistoryStorageTest {
 
 	@TempDir
-	File testFile = new File("temporaryfile.txt");
+	final File testFile = new File("temporaryfile.txt");
 
 	@Test
 	void should_store_and_load() {
 		// given
-		OverwritingFileGameHistoryStorage tut = new OverwritingFileGameHistoryStorage(testFile.getName());
+		final OverwritingFileGameHistoryStorage tut = new OverwritingFileGameHistoryStorage(testFile.getName());
 
 		// when
 		tut.store(new SingleGameResult(new PlayerName("Kamil")));
@@ -31,7 +30,7 @@ class OverwritingFileGameHistoryStorageTest {
 	@Test
 	void should_write_and_store_game_result() {
 		// given
-		OverwritingFileGameHistoryStorage tut = new OverwritingFileGameHistoryStorage(testFile.getName());
+		final OverwritingFileGameHistoryStorage tut = new OverwritingFileGameHistoryStorage(testFile.getName());
 
 		// when
 		tut.store(new SingleGameResult(new PlayerName("Kamil")));

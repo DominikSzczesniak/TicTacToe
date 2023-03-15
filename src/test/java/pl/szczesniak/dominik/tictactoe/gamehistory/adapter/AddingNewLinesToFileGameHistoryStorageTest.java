@@ -13,12 +13,12 @@ import static org.assertj.core.api.AssertionsForClassTypes.linesOf;
 class AddingNewLinesToFileGameHistoryStorageTest {
 
 	@TempDir
-	File testFile = new File("temporaryfile.txt");
+	final File testFile = new File("temporaryfile.txt");
 
 	@Test
 	void should_store_and_load() {
 		// given
-		AddingNewLinesToFileGameHistoryStorage tut = new AddingNewLinesToFileGameHistoryStorage(testFile.getName());
+		final AddingNewLinesToFileGameHistoryStorage tut = new AddingNewLinesToFileGameHistoryStorage(testFile.getName());
 
 		// when
 		tut.store(new SingleGameResult(new PlayerName("Kamil")));
@@ -31,7 +31,7 @@ class AddingNewLinesToFileGameHistoryStorageTest {
 	@Test
 	void write_store() {
 		// given
-		AddingNewLinesToFileGameHistoryStorage tut = new AddingNewLinesToFileGameHistoryStorage(testFile.getName());
+		final AddingNewLinesToFileGameHistoryStorage tut = new AddingNewLinesToFileGameHistoryStorage(testFile.getName());
 
 		// when
 		tut.store(new SingleGameResult(new PlayerName("Kamil")));
