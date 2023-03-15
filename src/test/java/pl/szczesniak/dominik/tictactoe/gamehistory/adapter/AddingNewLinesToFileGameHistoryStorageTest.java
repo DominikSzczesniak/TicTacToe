@@ -1,6 +1,5 @@
 package pl.szczesniak.dominik.tictactoe.gamehistory.adapter;
 
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import pl.szczesniak.dominik.tictactoe.gamehistory.domain.SingleGameResult;
@@ -10,8 +9,9 @@ import java.io.File;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.linesOf;
+import static org.junit.jupiter.api.Assertions.*;
 
-class OverwritingFileGameHistoryStorageTest {
+class AddingNewLinesToFileGameHistoryStorageTest {
 
 	@TempDir
 	File testFile = new File("temporaryfile.txt");
@@ -19,7 +19,7 @@ class OverwritingFileGameHistoryStorageTest {
 	@Test
 	void should_store_and_load() {
 		// given
-		OverwritingFileGameHistoryStorage tut = new OverwritingFileGameHistoryStorage(testFile.getName());
+		AddingNewLinesToFileGameHistoryStorage tut = new AddingNewLinesToFileGameHistoryStorage(testFile.getName());
 
 		// when
 		tut.store(new SingleGameResult(new PlayerName("Kamil")));
@@ -31,7 +31,7 @@ class OverwritingFileGameHistoryStorageTest {
 	@Test
 	void write_store() {
 		// given
-		OverwritingFileGameHistoryStorage tut = new OverwritingFileGameHistoryStorage(testFile.getName());
+		AddingNewLinesToFileGameHistoryStorage tut = new AddingNewLinesToFileGameHistoryStorage(testFile.getName());
 
 		// when
 		tut.store(new SingleGameResult(new PlayerName("Kamil")));
@@ -44,11 +44,17 @@ class OverwritingFileGameHistoryStorageTest {
 		// then
 		assertThat(linesOf(new File(testFile.getName()))).containsExactly(
 				"Kamil",
+				"1",
+				"Patryk",
+				"1",
+				"Adrian",
+				"1",
+				"Kamil",
 				"2",
 				"Patryk",
-				"3",
-				"Adrian",
-				"1"
+				"2",
+				"Patryk",
+				"3"
 		);
 	}
 
