@@ -29,7 +29,7 @@ class OverwritingFileGameHistoryStorageTest {
 	}
 
 	@Test
-	void write_store() {
+	void should_write_and_store_game_result() {
 		// given
 		OverwritingFileGameHistoryStorage tut = new OverwritingFileGameHistoryStorage(testFile.getName());
 
