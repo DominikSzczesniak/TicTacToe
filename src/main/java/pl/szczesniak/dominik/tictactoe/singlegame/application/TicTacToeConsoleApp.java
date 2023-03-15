@@ -12,7 +12,7 @@ public class TicTacToeConsoleApp {
 	private final Scanner scan = new Scanner(System.in);
 	private final Symbol SYMBOL_O = new Symbol('O');
 
-	public void run() {
+	public TicTacToeConsoleApp() {
 		System.out.println();
 		System.out.println("|----------------------------------------|");
 		System.out.println("|Welcome to a single game of tic tac toe.|");
@@ -21,13 +21,20 @@ public class TicTacToeConsoleApp {
 		System.out.println("-------------------------------------------------------------------------------------------------------");
 		System.out.println("|The game consists of 2 players, each with a symbol - X or O, player with symbol O gets to move first.|");
 		System.out.println("-------------------------------------------------------------------------------------------------------");
+		System.out.println();
+	}
 
+	public void run() {
+		System.out.println("---------------------------");
 		System.out.println("Player 1, choose your name:");
+		System.out.println("---------------------------");
 		PlayerName playerNameOne = setPlayerName(scan);
 		System.out.println(playerNameOne.getValue() + " choose your symbol, enter O or X");
 		Player playerOne = new Player(new Symbol(getSymbol(scan)), playerNameOne);
 
+		System.out.println("---------------------------");
 		System.out.println("Player 2, choose your name");
+		System.out.println("---------------------------");
 		PlayerName playerNameTwo = setPlayerName(scan);
 		Player playerTwo;
 		if (playerOne.getSymbol().equals(SYMBOL_O)) {
@@ -40,6 +47,16 @@ public class TicTacToeConsoleApp {
 		int boardSize = Integer.parseInt(scan.nextLine());
 
 		new TicTacToeGame(playerOne, playerTwo, boardSize).play();
+
+		System.out.println("Do you want to make a new setup? 1 - yes, 2 - no");
+		int choice = Integer.parseInt(scan.nextLine());
+		if (choice == 1) {
+			run();
+		} else {
+			System.out.println("-------------------");
+			System.out.println("Thanks for playing!");
+			System.out.println("-------------------");
+		}
 	}
 
 	private PlayerName setPlayerName(final Scanner scanner) {

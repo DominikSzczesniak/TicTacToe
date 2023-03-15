@@ -34,7 +34,7 @@ class TicTacToeGame {
 
 		do {
 			printer.printBoard(game.getBoardView());
-			System.out.println(nextPlayer.getName() + " (" + nextPlayer.getSymbol() + ") please enter coordinates (e.g. C2) with unoccupied place");
+			System.out.println(nextPlayer.getName().getValue() + " (" + nextPlayer.getSymbol() + ") please enter coordinates (e.g. C2) with unoccupied place");
 			latestResult = placeSymbol(game, translator, nextPlayer);
 			nextPlayer = getNextPlayer(nextPlayer);
 		} while (latestResult.getGameStatus().equals(GameStatus.IN_PROGRESS));
@@ -56,7 +56,7 @@ class TicTacToeGame {
 	}
 
 	private GameResult placeSymbol(final SingleGame game, final FieldCoordinatesTranslator translator, final Player nextPlayer) {
-		final FieldCoordinates coordinates = getFieldCoordinates(game, translator);
+		final FieldCoordinates coordinates = getFieldCoordinates(translator);
 		try {
 			return game.makeMove(nextPlayer, new PlayerMove(coordinates.getRow(), coordinates.getColumn()));
 		} catch (SpotAlreadyTakenOnBoardException exception) {
@@ -65,13 +65,13 @@ class TicTacToeGame {
 		}
 	}
 
-	private FieldCoordinates getFieldCoordinates(final SingleGame game, final FieldCoordinatesTranslator translator) {
+	private FieldCoordinates getFieldCoordinates(final FieldCoordinatesTranslator translator) {
 		try {
 			final String line = getSpot();
 			return translator.toCoordinates(line, boardSize);
 		} catch (WrongCoordinatesException e) {
 			System.out.println("Choose valid coordinates.");
-			return getFieldCoordinates(game, translator);
+			return getFieldCoordinates(translator);
 		}
 	}
 
@@ -81,7 +81,7 @@ class TicTacToeGame {
 
 	private void printResultOfTheGame(final GameResult result) {
 		if (GameStatus.WIN.equals(result.getGameStatus())) {
-			System.out.println("Congratulations, " + result.getWhoWon() + " won the round.");
+			System.out.println("Congratulations, " + result.getWhoWon().getValue() + " won the round.");
 		} else if (GameStatus.DRAW.equals(result.getGameStatus())) {
 			System.out.println("It's a draw.");
 		} else {
@@ -90,13 +90,13 @@ class TicTacToeGame {
 	}
 
 	private void askIfPlayAgain() {
-		System.out.println("Would you like to play again? (1 - yes, 2 - no)");
+		System.out.println("------------------------------------------------------------------");
+		System.out.println("| Would you like to play the same setup again? (1 - yes, 2 - no) |");
+		System.out.println("------------------------------------------------------------------");
 		int playAgain = getNumber(scan);
 		if (playAgain == 1) {
 			resetBoard(game.getBoardView());
 			play();
-		} else {
-			System.out.println("Thanks for playing");
 		}
 	}
 

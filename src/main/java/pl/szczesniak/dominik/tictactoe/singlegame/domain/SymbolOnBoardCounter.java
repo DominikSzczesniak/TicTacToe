@@ -2,10 +2,8 @@ package pl.szczesniak.dominik.tictactoe.singlegame.domain;
 
 import pl.szczesniak.dominik.tictactoe.singlegame.domain.model.Symbol;
 
-import java.util.Optional;
-
-import static java.util.Optional.empty;
-import static java.util.Optional.ofNullable;
+import java.util.Collections;
+import java.util.List;
 
 class SymbolOnBoardCounter {
 
@@ -19,8 +17,15 @@ class SymbolOnBoardCounter {
 
 
 	int countSymbolInSequence(final int rowIndex, final int columnIndex) {
-		return Math.max(countSymbolInSequenceHorizontally(rowIndex),
-				Math.max(maxCountSymbolInSequenceVertically(columnIndex), countSymbolInSequenceDiagonally(rowIndex, columnIndex)));
+		return max(
+				countSymbolInSequenceHorizontally(rowIndex),
+				maxCountSymbolInSequenceVertically(columnIndex),
+				countSymbolInSequenceDiagonally(rowIndex, columnIndex)
+		);
+	}
+
+	private Integer max(final int inSequenceHorizontally, final int inSequenceVertically, final int inSequenceDiagonally) {
+		return Collections.max(List.of(inSequenceHorizontally, inSequenceVertically, inSequenceDiagonally));
 	}
 
 	int countSymbolInSequenceHorizontally(final int rowIndex) {
