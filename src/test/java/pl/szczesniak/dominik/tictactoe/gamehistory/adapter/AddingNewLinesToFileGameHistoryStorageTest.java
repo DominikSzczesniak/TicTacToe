@@ -9,7 +9,6 @@ import java.io.File;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.linesOf;
-import static org.junit.jupiter.api.Assertions.*;
 
 class AddingNewLinesToFileGameHistoryStorageTest {
 
@@ -23,9 +22,10 @@ class AddingNewLinesToFileGameHistoryStorageTest {
 
 		// when
 		tut.store(new SingleGameResult(new PlayerName("Kamil")));
+		tut.store(new SingleGameResult(new PlayerName("Kamil")));
 
 		// then
-		assertThat(tut.loadPlayerScore(new PlayerName("Kamil")).getValue()).isEqualTo(1);
+		assertThat(tut.loadPlayerScore(new PlayerName("Kamil")).getValue()).isEqualTo(2);
 	}
 
 	@Test
