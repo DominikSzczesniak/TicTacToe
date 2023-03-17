@@ -83,7 +83,7 @@ class TicTacToeGame {
 		if (GameStatus.WIN.equals(result.getGameStatus())) {
 			System.out.println("Congratulations, " + result.getWhoWon().getValue() + " won the round.");
 		} else if (GameStatus.DRAW.equals(result.getGameStatus())) {
-			System.out.println("It is a draw.");
+			System.out.println("It's a draw.");
 		} else {
 			throw new IllegalArgumentException("Cannot printResultOfTheGame when game is in status:" + result.getGameStatus());
 		}
