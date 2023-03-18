@@ -86,7 +86,7 @@ public class SingleGame {
 
     private void checkIsSpotNotTaken(final Player player, final PlayerMove move) {
         if (board.isSpotTaken(move.getRowIndex(), move.getColumnIndex())) {
-            throw new SpotAlreadyTakenOnBoardException("Player " + player + " can't make a move. Spot is already taken.");
+            throw new SpotAlreadyTakenOnBoardException("Player " + player + " can't make a move. Spot is already takenn.");
         }
     }
 
