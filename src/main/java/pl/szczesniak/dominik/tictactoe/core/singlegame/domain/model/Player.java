@@ -16,16 +16,16 @@ public class Player {
 		playerID = idSetter.getPlayerId(playerName);
 	}
 
+	int getPlayerID() {
+		return playerID;
+	}
+
 	public Symbol getSymbol() {
 		return symbol;
 	}
 
 	public PlayerName getName() {
 		return playerName;
-	}
-
-	int getPlayerID() {
-		return playerID;
 	}
 
 	@Override

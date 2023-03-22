@@ -7,9 +7,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class IdSetter implements PlayerID {
+public class IdSetter {
 
-	@Override
 	public int getPlayerId(PlayerName playerName) {
 		createFile();
 		if (!playerHasId(playerName)) {

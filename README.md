@@ -1,5 +1,7 @@
 # Project Name
-Console game of TicTacToe between 2 players.
+Console game of TicTacToe between 2 players.        
+This project is released as a library, in order to practice using maven and to simulate usage of external library in 
+my other projects. Console part of the TicTacToe can be found here: https://github.com/DominikSzczesniak/console-tic-tac-toe-app
 
 ## Table of Contents
 * [General Info](#general-information)
@@ -26,12 +28,22 @@ Console game of TicTacToe between 2 players.
 
 ## Features
 - Game supports board sizes of 3-6.
-- Application keeps track of game history in .txt file.
+- Application keeps track of game history and players' ID in .txt files.
 
 
 ## Screenshots
-jakies screeny, gif lub filmik
+**Preparing the game** 
 
+![img_1.png](img_1.png) 
+![img.png](img.png)
+
+**Attempts to place symbol in non-existing fields**
+
+![img_2.png](img_2.png)
+
+**Game resolve**
+
+![img_3.png](img_3.png)
 
 ## Project Status
 Project is finished.
