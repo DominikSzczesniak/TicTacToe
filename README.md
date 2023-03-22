@@ -34,16 +34,16 @@ library in my other projects. Console part of the TicTacToe can be found here: h
 ## Screenshots
 **Preparing the game** 
 
-![img_1.png](img_1.png) 
-![img.png](img.png)
+![img_1.png](src/main/resources/img_1.png) 
+![img.png](src/main/resources/img.png)
 
 **Attempts to place symbol in non-existing fields**
 
-![img_2.png](img_2.png)
+![img_2.png](src/main/resources/img_2.png)
 
 **Game resolve**
 
-![img_3.png](img_3.png)
+![img_3.png](src/main/resources/img_3.png)
 
 ## Project Status
 Project is finished.
