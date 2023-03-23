@@ -1,5 +1,5 @@
 # Project Name
-Console game of TicTacToe between 2 players.        
+Console game of TicTacToe between 2 players.        a
 This part of the project is released as a library, in order to practice using maven and to simulate usage of external 
 library in my other projects. Console part of the TicTacToe can be found here: https://github.com/DominikSzczesniak/console-tic-tac-toe-app
 
@@ -18,6 +18,8 @@ library in my other projects. Console part of the TicTacToe can be found here: h
 - The purpose of the project was to use theoretical knowledge of OOP and SOLID in practice.
 - Project architecture focused on ports and adapters.
 - Application was made with TDD in mind.
+
+![Alt Text](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZGY3ZDk2MjBmMzJiNWM2ZWE5NWZhMTc3NDI2OGM2ZTY0MTM0OTJhMiZjdD1n/T9IZDMQIzadRbIdtwI/giphy.gif)
 
 
 ## Technologies Used
