@@ -1,5 +1,5 @@
 # Project Name
-Console game of TicTacToe between 2 players.        a
+Console game of TicTacToe between 2 players.    
 This part of the project is released as a library, in order to practice using maven and to simulate usage of external 
 library in my other projects. Console part of the TicTacToe can be found here: https://github.com/DominikSzczesniak/console-tic-tac-toe-app
 
