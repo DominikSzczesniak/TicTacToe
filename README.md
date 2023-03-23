@@ -19,7 +19,6 @@ library in my other projects. Console part of the TicTacToe can be found here: h
 - Project architecture focused on ports and adapters.
 - Application was made with TDD in mind.
 
-![Alt Text](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZGY3ZDk2MjBmMzJiNWM2ZWE5NWZhMTc3NDI2OGM2ZTY0MTM0OTJhMiZjdD1n/T9IZDMQIzadRbIdtwI/giphy.gif)
 
 
 ## Technologies Used
@@ -34,9 +33,9 @@ library in my other projects. Console part of the TicTacToe can be found here: h
 
 
 ## Screenshots
-**Preparing the game** 
+**Preparing the game**
 
-![img_1.png](resources/img_1.png) 
+![img_1.png](resources/img_1.png)
 ![img.png](resources/img.png)
 
 **Attempts to place symbol in non-existing fields**
@@ -46,6 +45,10 @@ library in my other projects. Console part of the TicTacToe can be found here: h
 **Game resolve**
 
 ![img_3.png](resources/img_3.png)
+
+![Alt Text](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZGY3ZDk2MjBmMzJiNWM2ZWE5NWZhMTc3NDI2OGM2ZTY0MTM0OTJhMiZjdD1n/T9IZDMQIzadRbIdtwI/giphy.gif)
+
+Link to the video presenting the app: https://www.youtube.com/watch?v=uEqRzmPEktM
 
 ## Project Status
 Project is finished.
