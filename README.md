@@ -48,7 +48,7 @@ library in my other projects. Console part of the TicTacToe can be found here: h
 
 ![Alt Text](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZGY3ZDk2MjBmMzJiNWM2ZWE5NWZhMTc3NDI2OGM2ZTY0MTM0OTJhMiZjdD1n/T9IZDMQIzadRbIdtwI/giphy.gif)
 
-Link to the video presenting the app: https://www.youtube.com/watch?v=uEqRzmPEktM
+App video showcase: https://www.youtube.com/watch?v=uEqRzmPEktM
 
 ## Project Status
 Project is finished.
