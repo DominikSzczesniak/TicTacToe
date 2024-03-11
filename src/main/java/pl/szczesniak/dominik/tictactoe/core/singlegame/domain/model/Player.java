@@ -1,22 +1,21 @@
 package pl.szczesniak.dominik.tictactoe.core.singlegame.domain.model;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public class Player {
 
 	private final Symbol symbol;
 	private final PlayerName playerName;
-	private final int playerID;
+	private final UUID playerID;
 
 	public Player(final Symbol symbol, final PlayerName playerName) {
 		this.symbol = symbol;
 		this.playerName = playerName;
-
-		IdSetter idSetter = new IdSetter();
-		playerID = idSetter.getPlayerId(playerName);
+		playerID = UUID.randomUUID();
 	}
 
-	int getPlayerID() {
+	UUID getPlayerID() {
 		return playerID;
 	}
 
