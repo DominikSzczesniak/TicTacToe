@@ -15,7 +15,7 @@ public class Player {
 		playerID = UUID.randomUUID();
 	}
 
-	UUID getPlayerID() {
+	public UUID getPlayerID() {
 		return playerID;
 	}
 
